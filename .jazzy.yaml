@@ -1,0 +1,7 @@
+# thinker document generator jazzy settings
+
+copyright: Copyright 2020 thinker
+author: Lobanov Aleksey
+xcodebuild_arguments: [-target, thinker-iOS]
+clean: true
+output: ./Documentation
