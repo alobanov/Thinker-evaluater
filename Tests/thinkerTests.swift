@@ -10,11 +10,14 @@
 import XCTest
 
 class thinkerTests: XCTestCase {
-    
-    static var allTests = [
-        ("testExample", testExample),
-    ]
-    
-    func testExample() {}
-    
+  
+  static var allTests = [
+    ("testExample", testExample),
+  ]
+  
+  func testExample() {
+    let instance = ThinkerEvaluater()
+    instance.prepare()
+  }
+  
 }

@@ -23,6 +23,18 @@
 		3D9C432E2274629C000A6585 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D9C432C2274629C000A6585 /* LaunchScreen.storyboard */; };
 		3D9C433422746323000A6585 /* thinker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D9C429022745894000A6585 /* thinker.framework */; };
 		3D9C433522746323000A6585 /* thinker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3D9C429022745894000A6585 /* thinker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E86F356D2545D00100D35553 /* ThinkerEvaluater.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F356C2545D00100D35553 /* ThinkerEvaluater.swift */; };
+		E86F356E2545D00100D35553 /* ThinkerEvaluater.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F356C2545D00100D35553 /* ThinkerEvaluater.swift */; };
+		E86F356F2545D00100D35553 /* ThinkerEvaluater.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F356C2545D00100D35553 /* ThinkerEvaluater.swift */; };
+		E86F35702545D00100D35553 /* ThinkerEvaluater.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F356C2545D00100D35553 /* ThinkerEvaluater.swift */; };
+		E86F35872545D02300D35553 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35862545D02300D35553 /* Parser.swift */; };
+		E86F35882545D02300D35553 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35862545D02300D35553 /* Parser.swift */; };
+		E86F35892545D02300D35553 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35862545D02300D35553 /* Parser.swift */; };
+		E86F358A2545D02300D35553 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35862545D02300D35553 /* Parser.swift */; };
+		E86F35932545D21600D35553 /* TypeParsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35922545D21600D35553 /* TypeParsers.swift */; };
+		E86F35942545D21600D35553 /* TypeParsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35922545D21600D35553 /* TypeParsers.swift */; };
+		E86F35952545D21600D35553 /* TypeParsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35922545D21600D35553 /* TypeParsers.swift */; };
+		E86F35962545D21600D35553 /* TypeParsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35922545D21600D35553 /* TypeParsers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +109,9 @@
 		3D9C432A2274629C000A6585 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3D9C432D2274629C000A6585 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3D9C432F2274629C000A6585 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E86F356C2545D00100D35553 /* ThinkerEvaluater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThinkerEvaluater.swift; sourceTree = "<group>"; };
+		E86F35862545D02300D35553 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
+		E86F35922545D21600D35553 /* TypeParsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeParsers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,10 +217,6 @@
 				3D9C42DB22745DB0000A6585 /* .gitignore */,
 				3D9C42D822745DAF000A6585 /* .jazzy.yaml */,
 				3D9C42D922745DAF000A6585 /* .swiftlint.yml */,
-				3DB91AC4229AC263002668DA,
-				3DB91AC5229AC26C002668DA,
-				3DB91AC6229AC272002668DA,
-				3DF6F6282315616D00706C4E,
 			);
 			path = Configs;
 			sourceTree = "<group>";
@@ -213,6 +224,7 @@
 		3D9C42A0227458FA000A6585 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				E86F356B2545CFE900D35553 /* evaluater */,
 				3D9C42A122745900000A6585 /* thinker.swift */,
 			);
 			path = Sources;
@@ -245,6 +257,16 @@
 				3D9C432F2274629C000A6585 /* Info.plist */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		E86F356B2545CFE900D35553 /* evaluater */ = {
+			isa = PBXGroup;
+			children = (
+				E86F356C2545D00100D35553 /* ThinkerEvaluater.swift */,
+				E86F35862545D02300D35553 /* Parser.swift */,
+				E86F35922545D21600D35553 /* TypeParsers.swift */,
+			);
+			path = evaluater;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -437,7 +459,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1020;
-				LastUpgradeCheck = 1200;
+				LastUpgradeCheck = 1210;
 				ORGANIZATIONNAME = thinker;
 				TargetAttributes = {
 					3D9C428F22745894000A6585 = {
@@ -634,6 +656,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D9C42A222745900000A6585 /* thinker.swift in Sources */,
+				E86F356D2545D00100D35553 /* ThinkerEvaluater.swift in Sources */,
+				E86F35932545D21600D35553 /* TypeParsers.swift in Sources */,
+				E86F35872545D02300D35553 /* Parser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -642,6 +667,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D9C42B1227459C1000A6585 /* thinker.swift in Sources */,
+				E86F356E2545D00100D35553 /* ThinkerEvaluater.swift in Sources */,
+				E86F35942545D21600D35553 /* TypeParsers.swift in Sources */,
+				E86F35882545D02300D35553 /* Parser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -650,6 +678,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D9C42BF227459F6000A6585 /* thinker.swift in Sources */,
+				E86F356F2545D00100D35553 /* ThinkerEvaluater.swift in Sources */,
+				E86F35952545D21600D35553 /* TypeParsers.swift in Sources */,
+				E86F35892545D02300D35553 /* Parser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -658,6 +689,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D9C42CD22745A28000A6585 /* thinker.swift in Sources */,
+				E86F35702545D00100D35553 /* ThinkerEvaluater.swift in Sources */,
+				E86F35962545D21600D35553 /* TypeParsers.swift in Sources */,
+				E86F358A2545D02300D35553 /* Parser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -784,7 +818,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -845,7 +879,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -873,7 +907,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Configs/thinker.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -903,7 +937,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Configs/thinker.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -931,7 +965,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Configs/thinker.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -944,7 +978,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.0;
+				TVOS_DEPLOYMENT_TARGET = 12.0;
 			};
 			name = Debug;
 		};
@@ -961,7 +995,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Configs/thinker.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -974,7 +1008,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.0;
+				TVOS_DEPLOYMENT_TARGET = 12.0;
 			};
 			name = Release;
 		};
@@ -991,7 +1025,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Configs/thinker.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1021,7 +1055,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Configs/thinker.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1053,7 +1087,7 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = Configs/thinker.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -1084,7 +1118,7 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = Configs/thinker.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -1105,7 +1139,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Configs/thinkerTests.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1123,7 +1157,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Configs/thinkerTests.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1151,7 +1185,7 @@
 				SDKROOT = appletvos;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.0;
+				TVOS_DEPLOYMENT_TARGET = 12.0;
 			};
 			name = Debug;
 		};
@@ -1170,7 +1204,7 @@
 				SDKROOT = appletvos;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.0;
+				TVOS_DEPLOYMENT_TARGET = 12.0;
 			};
 			name = Release;
 		};
@@ -1222,7 +1256,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Example/Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1243,7 +1277,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Example/Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
