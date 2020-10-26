@@ -8,6 +8,64 @@
 
 import Foundation
 
+public extension Parser where Output == AvailableType {
+  static let universal = Self { input in
+    let original = input
+    
+    if input.first == "`" {
+      guard let f = input.components(separatedBy: " ").first else {
+        input = original
+        return nil
+      }
+      
+      let result = f.replacingOccurrences(of: "`", with: "", options: String.CompareOptions.literal, range: nil)
+      input.removeFirst(f.count)
+      return .str(result)
+    }
+    
+    if input.contains("true") || input.contains("false") {
+      if input.prefix(4).contains("true") {
+        input.removeFirst("true".count)
+        return .bool(true)
+      }
+      
+      if input.prefix(5).contains("false") {
+        input.removeFirst("false".count)
+        return .bool(false)
+      }
+      
+      input = original
+      return nil
+    }
+    
+    let sign: Double
+    if input.first == "-" {
+      sign = -1
+      input.removeFirst()
+    } else if input.first == "+" {
+      sign = 1
+      input.removeFirst()
+    } else {
+      sign = 1
+    }
+    
+    var decimalCount = 0
+    let prefix = input.prefix { char in
+      if char == "." { decimalCount += 1 }
+      return char.isNumber || (char == "." && decimalCount <= 1)
+    }
+    
+    guard let match = Double(prefix)
+    else {
+      input = original
+      return nil
+    }
+    
+    input.removeFirst(prefix.count)
+    return .double(match * sign)
+  }
+}
+
 // Parser<Int>.int
 // .int
 public extension Parser where Output == Int {

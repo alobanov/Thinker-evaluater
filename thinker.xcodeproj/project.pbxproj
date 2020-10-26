@@ -35,6 +35,10 @@
 		E86F35942545D21600D35553 /* TypeParsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35922545D21600D35553 /* TypeParsers.swift */; };
 		E86F35952545D21600D35553 /* TypeParsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35922545D21600D35553 /* TypeParsers.swift */; };
 		E86F35962545D21600D35553 /* TypeParsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35922545D21600D35553 /* TypeParsers.swift */; };
+		E86F35C125474DC200D35553 /* ThinkerEvaluater+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35C025474DC200D35553 /* ThinkerEvaluater+Ext.swift */; };
+		E86F35C225474DC200D35553 /* ThinkerEvaluater+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35C025474DC200D35553 /* ThinkerEvaluater+Ext.swift */; };
+		E86F35C325474DC200D35553 /* ThinkerEvaluater+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35C025474DC200D35553 /* ThinkerEvaluater+Ext.swift */; };
+		E86F35C425474DC200D35553 /* ThinkerEvaluater+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35C025474DC200D35553 /* ThinkerEvaluater+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +116,7 @@
 		E86F356C2545D00100D35553 /* ThinkerEvaluater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThinkerEvaluater.swift; sourceTree = "<group>"; };
 		E86F35862545D02300D35553 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		E86F35922545D21600D35553 /* TypeParsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeParsers.swift; sourceTree = "<group>"; };
+		E86F35C025474DC200D35553 /* ThinkerEvaluater+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThinkerEvaluater+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -265,6 +270,7 @@
 				E86F356C2545D00100D35553 /* ThinkerEvaluater.swift */,
 				E86F35862545D02300D35553 /* Parser.swift */,
 				E86F35922545D21600D35553 /* TypeParsers.swift */,
+				E86F35C025474DC200D35553 /* ThinkerEvaluater+Ext.swift */,
 			);
 			path = evaluater;
 			sourceTree = "<group>";
@@ -659,6 +665,7 @@
 				E86F356D2545D00100D35553 /* ThinkerEvaluater.swift in Sources */,
 				E86F35932545D21600D35553 /* TypeParsers.swift in Sources */,
 				E86F35872545D02300D35553 /* Parser.swift in Sources */,
+				E86F35C125474DC200D35553 /* ThinkerEvaluater+Ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -670,6 +677,7 @@
 				E86F356E2545D00100D35553 /* ThinkerEvaluater.swift in Sources */,
 				E86F35942545D21600D35553 /* TypeParsers.swift in Sources */,
 				E86F35882545D02300D35553 /* Parser.swift in Sources */,
+				E86F35C225474DC200D35553 /* ThinkerEvaluater+Ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -681,6 +689,7 @@
 				E86F356F2545D00100D35553 /* ThinkerEvaluater.swift in Sources */,
 				E86F35952545D21600D35553 /* TypeParsers.swift in Sources */,
 				E86F35892545D02300D35553 /* Parser.swift in Sources */,
+				E86F35C325474DC200D35553 /* ThinkerEvaluater+Ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -692,6 +701,7 @@
 				E86F35702545D00100D35553 /* ThinkerEvaluater.swift in Sources */,
 				E86F35962545D21600D35553 /* TypeParsers.swift in Sources */,
 				E86F358A2545D02300D35553 /* Parser.swift in Sources */,
+				E86F35C425474DC200D35553 /* ThinkerEvaluater+Ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
