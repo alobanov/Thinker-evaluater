@@ -12,8 +12,19 @@ public enum ConditionOperatorType {
   case equal, greaterOrEqual, lessOrEqual, greaterThan, lessThan
 }
 
-public enum LogicOperatorType {
+public enum LogicOperatorType: String {
   case and, or, empty
+  
+  var operatorValue: String {
+    switch self {
+    case .and:
+      return "&&"
+    case .or:
+      return "||"
+    case .empty:
+      return ""
+    }
+  }
 }
 
 public enum NextType {
@@ -49,6 +60,116 @@ public struct ThinkerEvaluater {
   )
 
   // MARK: - Composites
+  
+  public func evalOper(_ input: String) -> String? {
+    let conditionParser = zip(
+      emptyCharsParser,
+      conditionOperator,
+      emptyCharsParser
+    ).flatMap { val -> Parser<ConditionOperatorType> in
+      return Parser.always(val.1)
+    }
+    
+    let logicParser = zip(
+      emptyCharsParser,
+      logicOperatr,
+      emptyCharsParser
+    ).flatMap { val -> Parser<LogicOperatorType> in
+      return Parser.always(val.1)
+    }
+    
+    let expressionCondition = zip(
+      .int,
+      conditionParser,
+      .int
+    ).map { lhs, condition, rhs -> Bool in
+      switch condition {
+      case .equal:
+        return lhs == rhs
+      case .greaterOrEqual:
+        return lhs >= rhs
+      case .lessOrEqual:
+        return lhs <= rhs
+      case .greaterThan:
+        return lhs > rhs
+      case .lessThan:
+        return lhs < rhs
+      }
+    }
+    
+    let compositeExpression = zip(expressionCondition, logicParser)
+      .map { res, con -> InteratorType in
+        switch con {
+        case .empty:
+          return .endOfExpression(res)
+        default:
+          return .haveNext(res, con)
+        }
+      }
+    
+    let parser = compositeExpression
+      .zeroOrMore()
+      .map {
+        $0.reduce("") { (current, value) in
+          print(current, value)
+          switch value {
+          case let .endOfExpression(result):
+            return current + "\(result)"
+          case let .haveNext(result, logicOperator):
+            return current + "\(result) \(logicOperator.operatorValue) "
+          }
+        }
+      }
+    
+    return parser.run(input).match
+  }
+  
+  public func logicEval(_ input: String) -> String? {
+    let logicParser = zip(
+      emptyCharsParser,
+      logicOperatr,
+      emptyCharsParser
+    ).flatMap { val -> Parser<LogicOperatorType> in
+      return Parser.always(val.1)
+    }
+    
+    let compositeLogic = zip(.bool, logicParser, .bool)
+      .zeroOrMore()
+      .map({ val -> String in
+        val.reduce("") { current, new in
+          let (lhs, logic, rhs) = new
+          
+          switch logic {
+          case .and:
+            print("Composite logic: AND", lhs, rhs)
+            let result = lhs && rhs
+            return current + String(describing: result)
+            
+          case .or:
+            print("Composite logic: OR", lhs, rhs)
+            let result = lhs || rhs
+            return current + String(describing: result)
+            
+          case .empty:
+            return current + String(describing: false)
+          }
+        }
+      })
+//      .map { lhs, logic, rhs -> Bool in
+//        switch logic {
+//        case .and:
+//          print("Composite logic: AND", lhs, rhs)
+//          return lhs && rhs
+//        case .or:
+//          print("Composite logic: OR", lhs, rhs)
+//          return lhs || rhs
+//        case .empty:
+//          return false
+//        }
+//      }
+    
+    return compositeLogic.run(input).match
+  }
   
   public func prepare() {
     let conditionParser = zip(
@@ -104,7 +225,7 @@ public struct ThinkerEvaluater {
           case let .endOfExpression(result):
             return current + "\(result)"
           case let .haveNext(result, logicOperator):
-            return current + "\(result) \(logicOperator) "
+            return current + "\(result) \(logicOperator.operatorValue) "
           }
         }
       }

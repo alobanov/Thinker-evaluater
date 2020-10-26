@@ -25,7 +25,9 @@ extension Parser: ExpressibleByStringLiteral where Output == Void {
 }
 
 public extension Parser {
-  func run(_ input: String) -> (match: Output?, rest: Substring) {
+  typealias EvaluateResult = (match: Output?, rest: Substring)
+  
+  func run(_ input: String) -> EvaluateResult {
     var input = input[...]
     let match = self.run(&input)
     return (match, input)

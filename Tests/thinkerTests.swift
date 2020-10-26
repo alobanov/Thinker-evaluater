@@ -18,6 +18,17 @@ class thinkerTests: XCTestCase {
   func testExample() {
     let instance = ThinkerEvaluater()
     instance.prepare()
+    
+    
+    guard let result = instance.evalOper("12 == -32 || 34 > 12 && 11 == 2") else {
+      XCTFail()
+      return
+    }
+    
+    XCTAssertEqual(result, "false || true && false")
+//    
+//    let resultLogic = instance.logicEval(result)
+//    XCTAssertEqual(resultLogic, "false")
   }
   
 }
