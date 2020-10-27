@@ -33,6 +33,8 @@ For example we have string like `44 >= 43 || 22 == 12`, you need to evaluate thi
    - [x] Double, 2.12312
    - [x] String, string must be enclosed in ` symbol
    - [x] Bool, just type `true` or `false`
+- [x] Comparison operators: `==`, `>=`, `<=`, `!=`, `>`, `<`
+- [x] Logic operators: `&&`, `||`
 
 ## Example
 
