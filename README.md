@@ -81,7 +81,15 @@ If you prefer not to use any of the aforementioned dependency managers, you can 
 
 ## Usage
 
-ℹ️ Describe the usage of your Kit
+```
+let instance = ThinkerEvaluater()
+    
+XCTAssertEqual(instance.evaluate("2 == 2") ?? false, true) // Int
+XCTAssertEqual(instance.evaluate("-122.321 == -122.321") ?? false, true) // Doube
+XCTAssertEqual(instance.evaluate("false != true") ?? false, true) // Boolean
+XCTAssertEqual(instance.evaluate("`asd` != `ads`") ?? false, true) // String
+XCTAssertEqual(instance.evaluate("`milk` == `milk` && 2 >= 1 || true == true") ?? false, true) // Composite expression
+```
 
 ## Contributing
 Contributions are very welcome 🙌
