@@ -9,7 +9,7 @@
 import Foundation
 
 extension ThinkerEvaluater {
-  public func compareBool(l: Bool, r: Bool?, op: ConditionOperatorType) -> Bool {
+  public func compareBool(l: Bool, r: Bool?, op: ComparisonType) -> Bool {
     guard let r = r else {
       return false
     }
@@ -24,7 +24,7 @@ extension ThinkerEvaluater {
     }
   }
   
-  public func compareDouble(l: Double, r: Double?, op: ConditionOperatorType) -> Bool {
+  public func compareDouble(l: Double, r: Double?, op: ComparisonType) -> Bool {
     guard let r = r else {
       return false
     }
@@ -45,7 +45,7 @@ extension ThinkerEvaluater {
     }
   }
   
-  public func compareString(l: String, r: String?, op: ConditionOperatorType) -> Bool {
+  public func compareString(l: String, r: String?, op: ComparisonType) -> Bool {
     guard let r = r else {
       return false
     }

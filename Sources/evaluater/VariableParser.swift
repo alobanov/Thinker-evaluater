@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension Parser where Output == AvailableType {
+public extension Parser where Output == VariableType {
   static let universal = Self { input in
     let original = input
     

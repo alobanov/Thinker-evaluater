@@ -35,17 +35,19 @@ class thinkerTests: XCTestCase {
     
     /// Success
     
-    XCTAssertEqual(instance.test("2 == 2") ?? false, true)
-    XCTAssertEqual(instance.test("-122.321 == -122.321") ?? false, true)
-    XCTAssertEqual(instance.test("-122.321 <= 0.1") ?? false, true)
-    XCTAssertEqual(instance.test("false != true") ?? false, true)
-    XCTAssertEqual(instance.test("true == true") ?? false, true)
-    XCTAssertEqual(instance.test("true == true") ?? false, true)
-    XCTAssertEqual(instance.test("`asd` != `ads`") ?? false, true)
-    XCTAssertEqual(instance.test("`milk` == `bacon`") ?? false, false)
+    XCTAssertEqual(instance.evaluate("2 == 2") ?? false, true)
+    XCTAssertEqual(instance.evaluate("-122.321 == -122.321") ?? false, true)
+    XCTAssertEqual(instance.evaluate("-122.321 <= 0.1") ?? false, true)
+    XCTAssertEqual(instance.evaluate("false != true") ?? false, true)
+    XCTAssertEqual(instance.evaluate("true == true") ?? false, true)
+    XCTAssertEqual(instance.evaluate("true == true") ?? false, true)
+    XCTAssertEqual(instance.evaluate("`asd` != `ads`") ?? false, true)
+    XCTAssertEqual(instance.evaluate("`milk` == `bacon`") ?? false, false)
+    XCTAssertEqual(instance.evaluate("`milk` == 2.123") ?? false, false)
     
     
-    XCTAssertEqual(instance.test("`milk` == 2.123") ?? false, false)
+    XCTAssertEqual(instance.evaluate("`milk` == `milk` && 2 >= 1 || true == true") ?? false, true)
+    
 //
 //    let resultLogic = instance.logicEval(result)
 //    XCTAssertEqual(resultLogic, "false")
