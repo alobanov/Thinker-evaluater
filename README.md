@@ -83,7 +83,7 @@ If you prefer not to use any of the aforementioned dependency managers, you can 
 
 ## Usage
 
-```
+```swift
 let instance = ThinkerEvaluater()
     
 XCTAssertEqual(instance.evaluate("2 == 2") ?? false, true) // Int
