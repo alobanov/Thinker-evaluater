@@ -21,14 +21,18 @@
 </p>
 
 # thinker
-
 <p align="center">
-ℹ️ Short description of thinker
+<b>ℹ️ Parser for evaluating logic expressions.</b>
 </p>
+
+For example we have string like `44 >= 43 || 22 == 12`, you need to evaluate this expression and take  a boolean result. So give that line for `thinker` and BOOM you have a result. Example: `let result = ThinkerEvaluater().evaluate(srt)`
 
 ## Features
 
-- [x] ℹ️ Add thinker features
+- [x] Work with types:
+   - [x] Double, 2.12312
+   - [x] String, string must be enclosed in ` symbol
+   - [x] Bool, just type `true` or `false`
 
 ## Example
 
