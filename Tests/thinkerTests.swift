@@ -16,24 +16,7 @@ class thinkerTests: XCTestCase {
   ]
   
   func testExample() {
-    let instance = ThinkerEvaluater()    
-    
-//    guard let result = instance
-//            .evalOper("12 == -32 || 34 > 12 && 11 == 2 && 44 <= 32 || -1 == -1") else {
-//      XCTFail()
-//      return
-//    }
-//
-//    let f1 = false
-//    let f2 = false
-//
-//    XCTAssertFalse((f1 && f2))
-//
-//    XCTAssertTrue(Bool("true") ?? false)
-//    XCTAssertFalse(Bool("false") ?? true)
-//    XCTAssertEqual(result, true)
-    
-    /// Success
+    let instance = ThinkerEvaluater()
     
     XCTAssertEqual(instance.evaluate("2 == 2") ?? false, true)
     XCTAssertEqual(instance.evaluate("-122.321 == -122.321") ?? false, true)
@@ -44,13 +27,7 @@ class thinkerTests: XCTestCase {
     XCTAssertEqual(instance.evaluate("`asd` != `ads`") ?? false, true)
     XCTAssertEqual(instance.evaluate("`milk` == `bacon`") ?? false, false)
     XCTAssertEqual(instance.evaluate("`milk` == 2.123") ?? false, false)
-    
-    
     XCTAssertEqual(instance.evaluate("`milk` == `milk` && 2 >= 1 || true == true") ?? false, true)
-    
-//
-//    let resultLogic = instance.logicEval(result)
-//    XCTAssertEqual(resultLogic, "false")
   }
   
 }
