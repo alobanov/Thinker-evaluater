@@ -30,26 +30,36 @@ For example we have string like `44 >= 43 || 22 == 12`, you need to evaluate thi
 ## Features
 
 - [x] Work with types:
-   - [x] Double, 2.12312
-   - [x] String, string must be enclosed in ` symbol
-   - [x] Bool, just type `true` or `false`
+   - [x] Numeric constants, as floating point (12345.678)
+   - [x] String constants (single quotes: \`foobar\`)
+   - [x] Boolean constants: `true` `false`
 - [x] Comparison operators: `==`, `>=`, `<=`, `!=`, `>`, `<`
 - [x] Logic operators: `&&`, `||`
+
+## Roadmap
+
+- [ ] Parenthesis to control order of evaluation `(` `)`
+- [ ] Ternary conditional: `?` `:`
+- [ ] Modifiers: + - / * & | ^ ** % >> <<
+- [ ] Map value from json, for example `var.nodeName`, `var.` will be replaced value from dictionary by key `nodeName`
 
 ## Example
 
 The example application is the best way to see `thinker` in action. Simply open the `thinker.xcodeproj` and run the `Example` scheme.
 
-## Installation
+## Usage
 
-### CocoaPods
-
-thinker is available through [CocoaPods](http://cocoapods.org). To install
-it, simply add the following line to your Podfile:
-
-```bash
-pod 'thinker'
+```swift
+let instance = ThinkerEvaluater()
+    
+XCTAssertEqual(instance.evaluate("2 == 2") ?? false, true) // Int
+XCTAssertEqual(instance.evaluate("-122.321 == -122.321") ?? false, true) // Doube
+XCTAssertEqual(instance.evaluate("false != true") ?? false, true) // Boolean
+XCTAssertEqual(instance.evaluate("`asd` != `ads`") ?? false, true) // String
+XCTAssertEqual(instance.evaluate("`milk` == `milk` && 2 >= 1 || true == true") ?? false, true) // Composite expression
 ```
+
+## Installation
 
 ### Carthage
 
@@ -80,18 +90,6 @@ Alternatively navigate to your Xcode project, select `Swift Packages` and click 
 ### Manually
 
 If you prefer not to use any of the aforementioned dependency managers, you can integrate thinker into your project manually. Simply drag the `Sources` Folder into your Xcode project.
-
-## Usage
-
-```swift
-let instance = ThinkerEvaluater()
-    
-XCTAssertEqual(instance.evaluate("2 == 2") ?? false, true) // Int
-XCTAssertEqual(instance.evaluate("-122.321 == -122.321") ?? false, true) // Doube
-XCTAssertEqual(instance.evaluate("false != true") ?? false, true) // Boolean
-XCTAssertEqual(instance.evaluate("`asd` != `ads`") ?? false, true) // String
-XCTAssertEqual(instance.evaluate("`milk` == `milk` && 2 >= 1 || true == true") ?? false, true) // Composite expression
-```
 
 ## Contributing
 Contributions are very welcome 🙌
