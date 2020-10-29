@@ -57,6 +57,26 @@ XCTAssertEqual(instance.evaluate("-122.321 == -122.321") ?? false, true) // Doub
 XCTAssertEqual(instance.evaluate("false != true") ?? false, true) // Boolean
 XCTAssertEqual(instance.evaluate("`asd` != `ads`") ?? false, true) // String
 XCTAssertEqual(instance.evaluate("`milk` == `milk` && 2 >= 1 || true == true") ?? false, true) // Composite expression
+
+// Usafe with JSON values
+
+let string = "model.int == 21 && model.nested.value != true || model.doubleValue == 3233.23123124 && `model.string` == `stringValue`"
+    
+let json: [String: Any] = [
+   "int": 21,
+   "nested": ["value": false],
+   "string": "stringValue",
+   "doubleValue": 3233.23123124
+ ]
+
+let result = ThinkerEvaluater().evaluate(string, keypathConfig: ("model.", json))
+
+if !result.rest.isEmpty {
+  XCTFail(String(result.rest))
+}
+
+XCTAssertEqual(result.result ?? false, true)
+
 ```
 
 ## Installation
