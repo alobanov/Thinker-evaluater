@@ -23,19 +23,14 @@ public extension Parser where Output == VariableType {
       return .str(result)
     }
     
-    if input.contains("true") || input.contains("false") {
-      if input.prefix(4).contains("true") {
-        input.removeFirst("true".count)
-        return .bool(true)
-      }
-      
-      if input.prefix(5).contains("false") {
-        input.removeFirst("false".count)
-        return .bool(false)
-      }
-      
-      input = original
-      return nil
+    if input.prefix(4).contains("true") {
+      input.removeFirst("true".count)
+      return .bool(true)
+    }
+    
+    if input.prefix(5).contains("false") {
+      input.removeFirst("false".count)
+      return .bool(false)
     }
     
     let sign: Double

@@ -9,6 +9,8 @@
 import Foundation
 
 public struct ThinkerEvaluater {
+  public typealias Result = (result: Bool?, rest: Substring)
+  
   // MARK: - Primitive parsers
   
   // Comparison operator parser (11 == 34)

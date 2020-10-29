@@ -62,7 +62,7 @@ public enum EmptyCharType {
 }
 
 public enum InteratorType {
-  case endOfExpression(Bool), haveNext(Bool, LogicType)
+  case endOfExpression(result: Bool), haveNext(result: Bool, logicOp: LogicType)
 }
 
-typealias LogicValue = (Bool, LogicType)
+typealias LogicValue = (result: Bool, logicOp: LogicType)

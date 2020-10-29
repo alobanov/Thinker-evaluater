@@ -48,20 +48,20 @@ extension ThinkerEvaluater {
     }
     
     let compositeExpression = zip(expressionCondition, logicParser)
-      .map { res, con -> InteratorType in
-        switch con {
+      .map { result, logicOperator -> InteratorType in
+        switch logicOperator {
         case .empty:
-          return .endOfExpression(res)
+          return .endOfExpression(result: result)
         default:
-          return .haveNext(res, con)
+          return .haveNext(result: result, logicOp: logicOperator)
         }
       }
     
     let parser = compositeExpression
       .zeroOrMore()
       .map {
-        $0.reduce("") { (current, value) in
-          switch value {
+        $0.reduce("") { (current, next) in
+          switch next {
           case let .endOfExpression(result):
             return current + "\(result)"
           case let .haveNext(result, logicOperator):
