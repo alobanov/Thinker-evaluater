@@ -35,13 +35,13 @@ For example we have string like `44 >= 43 || 22 == 12`, you need to evaluate thi
    - [x] Boolean constants: `true` `false`
 - [x] Comparison operators: `==`, `>=`, `<=`, `!=`, `>`, `<`
 - [x] Logic operators: `&&`, `||`
+- [x] Map value from json, for example `prefix.node.nestedValue`, `var.` will be replaced value from dictionary by key `node.nestedValue`
 
 ## Roadmap
 
 - [ ] Parenthesis to control order of evaluation `(` `)`
 - [ ] Ternary conditional: `?` `:`
-- [ ] Modifiers: + - / * & | ^ ** % >> <<
-- [ ] Map value from json, for example `var.nodeName`, `var.` will be replaced value from dictionary by key `nodeName`
+- [ ] Modifiers: `+` `-` `/` `*` `&` `|` `^` `**` `%` `>>` `<<`
 
 ## Example
 
