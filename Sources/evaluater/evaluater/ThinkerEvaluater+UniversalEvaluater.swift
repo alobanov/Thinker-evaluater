@@ -45,17 +45,17 @@ extension ThinkerEvaluater {
       }
     
     // Parser for "<any value><whitespace><comparison><whitespace><any value>" = "3 >= 2"
-    let expressionCondition = zip(.universal, comparisonSentenceParser, .universal)
+    let expressionCondition = zip(.universalValue, comparisonSentenceParser, .universalValue)
       .map { lhs, condition, rhs -> Bool in
         switch lhs {
-        case let .bool(lhsValue):
-          return compareBool(l: lhsValue, r: rhs.boolValue, op: condition)
+        case let .bool(value):
+          return compareBool(l: value, r: rhs.boolValue, op: condition)
           
-        case let .double(lhsValue):
-          return compareDouble(l: lhsValue, r: rhs.doubleValue, op: condition)
+        case let .double(value):
+          return compareDouble(l: value, r: rhs.doubleValue, op: condition)
           
-        case let .str(lhsValue):
-          return compareString(l: lhsValue, r: rhs.strValue, op: condition)
+        case let .str(value):
+          return compareString(l: value, r: rhs.strValue, op: condition)
         }
       }
     

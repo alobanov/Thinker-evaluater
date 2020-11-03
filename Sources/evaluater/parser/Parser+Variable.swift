@@ -9,7 +9,7 @@
 import Foundation
 
 public extension Parser where Output == VariableType {
-  static let universal = Self { input in
+  static let universalValue = Self { input in
     let original = input
     
     if input.first == "`" {
@@ -93,18 +93,18 @@ public extension Parser where Output == Bool {
   static let bool = Self { input in
     let original = input
     
-    var resultPrefix = 0
-    var prefixValue = ""
-    
-    if input.hasPrefix("true") {
+    if input.prefix(4).contains("true") {
       input.removeFirst("true".count)
       return true
-    } else if input.hasPrefix("false") {
+    }
+    
+    if input.prefix(5).contains("false") {
       input.removeFirst("false".count)
       return false
-    } else {
-      return false
     }
+    
+    input = original
+    return false
   }
 }
 

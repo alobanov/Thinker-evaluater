@@ -39,7 +39,7 @@ extension ThinkerEvaluater {
     case .greaterThan:
       return l > r
     case .lessThan:
-      return l <= r
+      return l < r
     case .notEqual:
       return l != r
     }
