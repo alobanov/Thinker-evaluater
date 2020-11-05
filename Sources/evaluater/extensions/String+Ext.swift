@@ -5,6 +5,13 @@ extension String {
     return replacingOccurrences(of: "\\n", with: " ", options: .regularExpression)
   }
   
+  public func removeBraces() -> String {
+    var newValue = self
+    newValue = newValue.replacingOccurrences(of: "(", with: "")
+    newValue = newValue.replacingOccurrences(of: ")", with: "")
+    return newValue
+  }
+  
   public func regex(pattern: String) -> [String] {
     do {
       let regex = try NSRegularExpression(pattern: pattern, options: NSRegularExpression.Options.allowCommentsAndWhitespace)

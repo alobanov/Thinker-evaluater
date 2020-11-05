@@ -7,6 +7,7 @@
 //
 
 @testable import thinker
+import Foundation
 import XCTest
 
 class thinkerTests: XCTestCase {
@@ -29,6 +30,11 @@ class thinkerTests: XCTestCase {
     XCTAssertEqual(instance.evaluate("`milk` == 2.123").result ?? false, false)
     XCTAssertEqual(instance.evaluate("`milk` == `milk` && 2 >= 1 || false != true").result ?? false, true)
     XCTAssertEqual(instance.evaluate("21 == 21 && false != true").result ?? false, true)
+    
+    XCTAssertEqual(instance.evaluateLogic("true || false && true").result ?? false, true)
+    XCTAssertEqual(instance.evaluateLogic("true || false").result ?? false, true)
+    XCTAssertEqual(instance.evaluateLogic("false && false").result ?? false, false)
+    XCTAssertEqual(instance.evaluateLogic("true || false || true").result ?? false, true)
   }
   
   func test_ExpressionMiddleware() {
@@ -81,6 +87,18 @@ class thinkerTests: XCTestCase {
     ]
     
     let result = ThinkerEvaluater().evaluate(string, keypathConfig: ("model.", json))
+    
+    if !result.rest.isEmpty {
+      XCTFail(String(result.rest))
+    }
+    
+    XCTAssertEqual(result.result ?? false, true)
+  }
+  
+  func test_ExpressionMiddleware_with_braces() {
+    let expression = "(34 == 34 || (false == true)) && ((43 >= 23) || (`asd` == `not`) || (11 == 11))"
+    
+    let result = ThinkerEvaluater().evaluateWithBraces(expression)
     
     if !result.rest.isEmpty {
       XCTFail(String(result.rest))

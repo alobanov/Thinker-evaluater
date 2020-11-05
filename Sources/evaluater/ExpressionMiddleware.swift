@@ -31,4 +31,13 @@ public class ExpressionMiddleware {
     
     return expression
   }
+  
+  public func bracesEvaluater(string: String) -> [String] {
+    let expression = string
+    
+    let regexp = "\\(([^()]|())*\\)"
+    let paths = expression.regex(pattern: regexp)
+
+    return paths.map { $0.removeBraces() }
+  }
 }
