@@ -9,6 +9,17 @@
 import Foundation
 
 extension ThinkerEvaluater {
+  public func compareLogicBool(l: Bool, r: Bool, op: LogicType) -> Bool {
+    switch op {
+    case .and:
+      return l && r
+    case .or:
+      return l || r
+    default:
+      return false
+    }
+  }
+  
   public func compareBool(l: Bool, r: Bool?, op: ComparisonType) -> Bool {
     guard let r = r else {
       return false

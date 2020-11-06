@@ -35,26 +35,24 @@ extension ThinkerEvaluater {
   
   public func evaluateWithBraces(_ input: String) -> Result {
     var expression = input
-    var inc = 1
-    
     while true {
       let result = ExpressionMiddleware().bracesEvaluater(string: expression)
-      
       if result.isEmpty {
         break
       }
       
-      for v in result {
-        let expRes = evaluate(v)
+      for subExpression in result {
+        let expRes = subExpression
+          .regex(pattern: "( == | >= | <= | != | > | < )").isEmpty
+          ? evaluateLogic(subExpression)
+          : evaluate(subExpression)
         
         guard let resultBool = expRes.result else {
           return (nil, expRes.rest)
         }
         
-        expression = expression.replacingOccurrences(of: "(\(v))", with: String(describing: resultBool))
-        print(inc, expression)
-        print("==")
-        inc+=1
+        expression = expression.replacingOccurrences(of: "(\(subExpression))", with: String(describing: resultBool))
+        print(expression)
       }
     }
     
@@ -62,109 +60,69 @@ extension ThinkerEvaluater {
   }
   
   public func evaluateLogic(_ input: String) -> Result {
-    // Parser for "<whitespace><logic><whitespace>" = " && "
+    // Parser for "<whitespace><comparison><whitespace>" && "
     let logicParser = zip(whitespaceParser, logicOperatr, whitespaceParser)
-      .flatMap { val -> Parser<LogicType> in
-        return Parser.always(val.1)
-      }
+      .flatMap { Parser.always($0.1) }
     
-    // Parser exmaple = "3 >= 2 && "
-    // It just detected more sentence or catch end of sentence
-    let compositeExpression = zip(.bool, logicParser)
-      .map { result, logicOperator -> InteratorType in
-        switch logicOperator {
+    // Parser for "<any value><whitespace><comparison><whitespace><any value>" = "3 >= 2"
+    let expressionCondition = zip(.bool, logicParser, .bool)
+      .map { lhs, condition, rhs -> Bool in
+        return compareLogicBool(l: lhs, r: rhs, op: condition)
+      }
+  
+    let compositeExpression = zip(expressionCondition, whitespaceParser, logicOperatr, whitespaceParser)
+      .map { result, whitespace, logic, _ -> InteratorType in
+        switch whitespace {
         case .empty:
-          #if DEBUG
-          print("endOfExpression:", result)
-          #endif
           return .endOfExpression(result: result)
           
-        default:
-          #if DEBUG
-          print("haveNext:", result, logicOperator)
-          #endif
-          return .haveNext(result: result, logicOp: logicOperator)
+        case .whitespace:
+          return .haveNext(result: result, logicOp: logic)
         }
       }
     
-    // We have:
-    // 1. Current sentance: (<bool>,&&)
-    // 2. Next value: <bool>
-    let endOfExpressionComparison: (LogicValue, Bool) -> (LogicValue) = { current, result in
-      switch current.logicOp {
-      case .and:
-        let newResult = current.result && result
-        #if DEBUG
-        print("Final composite logic:", current.result, "AND", result, "->", newResult)
-        #endif
-        return (newResult, .finish)
-        
-      case .or:
-        let newResult = current.0 || result
-        #if DEBUG
-        print("Final composite logic:", current.result, "OR", result, "->", newResult)
-        #endif
-        return (newResult, .finish)
-        
-      case .empty, .finish:
-        return (current.result, current.logicOp)
-        
-      case .start:
-        return (result, current.logicOp)
-      }
-    }
-    
-    // We have:
-    // 1. Current sentance: (<bool>,&&)
-    // 2. Next value: <bool>
-    // 3. Next logic operator: &&
-    let haveNextComparison: (LogicValue, Bool, LogicType) -> (LogicValue) = { currentValue, nextValue, nextLogicOperator in
-      if currentValue.logicOp == .start {
-        return (nextValue, nextLogicOperator)
-      } else {
-        switch currentValue.logicOp {
-        case .and:
-          let newResult = currentValue.result && nextValue
-          #if DEBUG
-          print("Composite logic:", currentValue.result, "AND", nextValue, "->", newResult)
-          #endif
-          return (newResult, nextLogicOperator)
-          
-        case .or:
-          let newResult = currentValue.result || nextValue
-          #if DEBUG
-          print("Composite logic:", currentValue.result, "OR", nextValue, "->", newResult)
-          #endif
-          return (newResult, nextLogicOperator)
-          
-        case .empty, .start, .finish:
-          return (currentValue.result, currentValue.logicOp)
-        }
-        
-      }
-    }
-    
-    // Parser full expression: "3 >= 2 && 2 == 2 || `test` == `test`"
-    let parser = compositeExpression
-      .zeroOrMore(separatedBy: " ")
-      .map {
-        $0.reduce(LogicValue(false, .start)) { current, value in
-          switch value {
-          case let .endOfExpression(result):
-            return endOfExpressionComparison(current, result)
+    let parser = compositeExpression.zeroOrMore().map {
+      $0.reduce(LogicValue(false, .start)) { current, value in
+        switch value {
+        case let .endOfExpression(result):
+          switch current.logicOp {
+          case .and:
+            let newResult = current.result && result
+            return (newResult, .finish)
+          case .or:
+            let newResult = current.result || result
+            return (newResult, .finish)
             
-          case let .haveNext(result, logicOperator):
-            return haveNextComparison(current, result, logicOperator)
+          case .empty, .finish:
+            return (current.result, current.logicOp)
+            
+          case .start:
+            return (result, current.logicOp)
+          }
+          
+        case let .haveNext(result, logicOp):
+          if current.logicOp == .start {
+            return (result, logicOp)
+            
+          } else {
+            switch current.logicOp {
+            case .and, .or:
+              let newResult = compareLogicBool(l: current.result, r: result, op: current.logicOp)
+              return (newResult, logicOp)
+              
+            case .empty, .start, .finish:
+              return (current.result, current.logicOp)
+            }
           }
         }
       }
+    }
     
     let res = parser.run(input)
     return (res.match?.0, res.rest)
   }
   
   public func evaluate(_ input: String) -> Result {
-    
     // Parser for "<whitespace><comparison><whitespace>" = " >= "
     let comparisonSentenceParser = zip(whitespaceParser, comparisonOperator, whitespaceParser)
       .flatMap { Parser.always($0.1) }
@@ -195,7 +153,7 @@ extension ThinkerEvaluater {
     let compositeExpression = zip(expressionCondition, logicParser)
       .map { result, logicOperator -> InteratorType in
         switch logicOperator {
-        case .empty:
+        case .empty, .finish:
           #if DEBUG
           print("endOfExpression:", result)
           #endif
@@ -222,7 +180,7 @@ extension ThinkerEvaluater {
         return (newResult, .finish)
         
       case .or:
-        let newResult = current.0 || result
+        let newResult = current.result || result
         #if DEBUG
         print("Final composite logic:", current.result, "OR", result, "->", newResult)
         #endif

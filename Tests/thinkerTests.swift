@@ -17,24 +17,46 @@ class thinkerTests: XCTestCase {
   ]
   
   func testExample() {
-    let instance = ThinkerEvaluater()
+    let ins = ThinkerEvaluater()
     
-    XCTAssertEqual(instance.evaluate("2 == 2").result ?? false, true)
-    XCTAssertEqual(instance.evaluate("-122.321 == -122.321").result ?? false, true)
-    XCTAssertEqual(instance.evaluate("-122.321 <= 0.1").result ?? false, true)
-    XCTAssertEqual(instance.evaluate("false != true").result ?? false, true)
-    XCTAssertEqual(instance.evaluate("true == true").result ?? false, true)
-    XCTAssertEqual(instance.evaluate("true == true").result ?? false, true)
-    XCTAssertEqual(instance.evaluate("`asd` != `ads`").result ?? false, true)
-    XCTAssertEqual(instance.evaluate("`milk` == `bacon`").result ?? false, false)
-    XCTAssertEqual(instance.evaluate("`milk` == 2.123").result ?? false, false)
-    XCTAssertEqual(instance.evaluate("`milk` == `milk` && 2 >= 1 || false != true").result ?? false, true)
-    XCTAssertEqual(instance.evaluate("21 == 21 && false != true").result ?? false, true)
+    let test1 = ins.evaluate("2 == 2")
+    XCTAssertEqual(test1.result, true)
+    XCTAssertEqual(test1.rest, "")
+
+    XCTAssertEqual(ins.evaluate("-122.321 == -122.321").result, true)
+    XCTAssertEqual(ins.evaluate("-122.321 <= 0.1").result, true)
+    XCTAssertEqual(ins.evaluate("false != true").result, true)
+    XCTAssertEqual(ins.evaluate("true == true").result, true)
+    XCTAssertEqual(ins.evaluate("true == true").result, true)
+    XCTAssertEqual(ins.evaluate("`asd` != `ads`").result, true)
+    XCTAssertEqual(ins.evaluate("`milk` == `bacon`").result, false)
+    XCTAssertEqual(ins.evaluate("`milk` == 2.123").result, false)
+    XCTAssertEqual(ins.evaluate("`milk` == `milk` && 2 >= 1 || false != true").result, true)
+    XCTAssertEqual(ins.evaluate("21 == 21 && false != true").result, true)
+  }
+  
+  func test_logicTest() {
+    let ins = ThinkerEvaluater()
     
-    XCTAssertEqual(instance.evaluateLogic("true || false && true").result ?? false, true)
-    XCTAssertEqual(instance.evaluateLogic("true || false").result ?? false, true)
-    XCTAssertEqual(instance.evaluateLogic("false && false").result ?? false, false)
-    XCTAssertEqual(instance.evaluateLogic("true || false || true").result ?? false, true)
+    let test2 = ins.evaluateLogic("true || false")
+    XCTAssertEqual(test2.result, true)
+    XCTAssertEqual(test2.rest, "")
+    
+    let test3 = ins.evaluateLogic("true || true")
+    XCTAssertEqual(test3.result, true)
+    XCTAssertEqual(test3.rest, "")
+    
+    let test4 = ins.evaluateLogic("false || true")
+    XCTAssertEqual(test4.result, true)
+    XCTAssertEqual(test4.rest, "")
+    
+    let test5 = ins.evaluateLogic("false && false")
+    XCTAssertEqual(test5.result, false)
+    XCTAssertEqual(test5.rest, "")
+    
+    let test6 = ins.evaluateLogic("true && true")
+    XCTAssertEqual(test6.result, true)
+    XCTAssertEqual(test6.rest, "")
   }
   
   func test_ExpressionMiddleware() {
@@ -96,14 +118,24 @@ class thinkerTests: XCTestCase {
   }
   
   func test_ExpressionMiddleware_with_braces() {
-    let expression = "(34 == 34 || (false == true)) && ((43 >= 23) || (`asd` == `not`) || (11 == 11))"
-    
+    //
+    let expression = "(34 == 34 || false == true) && ((43 >= 23) || (`asd` == `not` || 11 == 11))"
     let result = ThinkerEvaluater().evaluateWithBraces(expression)
     
     if !result.rest.isEmpty {
       XCTFail(String(result.rest))
     }
     
-    XCTAssertEqual(result.result ?? false, true)
+    XCTAssertEqual(result.result, true)
+    
+    // (true) && (true)
+    let expression1 = "(34 >= 41 || true != false) && ((32 != 23 || `asd` != `not`) || (11 == 11))"
+    let result1 = ThinkerEvaluater().evaluateWithBraces(expression1)
+    
+    if !result1.rest.isEmpty {
+      XCTFail(String(result1.rest))
+    }
+    
+    XCTAssertEqual(result1.result, true)
   }
 }

@@ -93,10 +93,16 @@ public extension Parser {
     Parser<[Output]> { input in
       var rest = input
       var matches: [Output] = []
+      
       while let match = self.run(&input) {
         rest = input
         matches.append(match)
+        
         if separator.run(&input) == nil {
+          return matches
+        }
+        
+        if input.isEmpty {
           return matches
         }
       }
