@@ -70,17 +70,17 @@ extension ThinkerEvaluater {
         }
       }
     
-    let _ = zip(.bool, logicParser, .bool)
-      .map { lhs, logic, rhs -> Bool in
-        switch logic {
-        case .and:
-          return lhs && rhs
-        case .or:
-          return lhs || rhs
-        case .empty, .start, .finish:
-          return false
-        }
-      }
+//    let _ = zip(.bool, logicParser, .bool)
+//      .map { lhs, logic, rhs -> Bool in
+//        switch logic {
+//        case .and:
+//          return lhs && rhs
+//        case .or:
+//          return lhs || rhs
+//        case .empty, .start, .finish:
+//          return false
+//        }
+//      }
     
     return parser.run(input).match
   }

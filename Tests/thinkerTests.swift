@@ -13,54 +13,84 @@ import XCTest
 class thinkerTests: XCTestCase {
   
   static var allTests = [
-    ("testExample", testExample),
+    ("testExample", testTrivialComparison),
   ]
   
-  func testExample() {
-    let ins = ThinkerEvaluater()
+  func testTrivialComparison() {
+    let thnkr = ThinkerEvaluater()
     
-    let test1 = ins.evaluate("2 == 2")
-    XCTAssertEqual(test1.result, true)
-    XCTAssertEqual(test1.rest, "")
-
-    XCTAssertEqual(ins.evaluate("-122.321 == -122.321").result, true)
-    XCTAssertEqual(ins.evaluate("-122.321 <= 0.1").result, true)
-    XCTAssertEqual(ins.evaluate("false != true").result, true)
-    XCTAssertEqual(ins.evaluate("true == true").result, true)
-    XCTAssertEqual(ins.evaluate("true == true").result, true)
-    XCTAssertEqual(ins.evaluate("`asd` != `ads`").result, true)
-    XCTAssertEqual(ins.evaluate("`milk` == `bacon`").result, false)
-    XCTAssertEqual(ins.evaluate("`milk` == 2.123").result, false)
-    XCTAssertEqual(ins.evaluate("`milk` == `milk` && 2 >= 1 || false != true").result, true)
-    XCTAssertEqual(ins.evaluate("21 == 21 && false != true").result, true)
+//    let boolTes = ins.evaluate("false != true")
+//    XCTAssertEqual(boolTes.result, true)
+//    XCTAssertEqual(boolTes.rest, "")
+    
+    // Simple
+    
+    let intTest = thnkr.evaluate("2 == 2")
+    XCTAssertEqual(intTest.result, true)
+    XCTAssertEqual(intTest.rest, "")
+    
+    let doubleTest = thnkr.evaluate("-122.321 == -122.321")
+    XCTAssertEqual(doubleTest.result, true)
+    XCTAssertEqual(doubleTest.rest, "")
+    
+    let doubleTest1 = thnkr.evaluate("-122.321 <= 0.1")
+    XCTAssertEqual(doubleTest1.result, true)
+    XCTAssertEqual(doubleTest1.rest, "")
+    
+    let boolTest = thnkr.evaluate("false != true")
+    XCTAssertEqual(boolTest.result, true)
+    XCTAssertEqual(boolTest.rest, "")
+    
+    let boolTest1 = thnkr.evaluate("false != true")
+    XCTAssertEqual(boolTest1.result, true)
+    XCTAssertEqual(boolTest1.rest, "")
+    
+    let strTest = thnkr.evaluate("`milk` == `bacon`")
+    XCTAssertEqual(strTest.result, false)
+    XCTAssertEqual(strTest.rest, "")
+    
+    let strTest1 = thnkr.evaluate("`milk` == 2.123")
+    XCTAssertEqual(strTest1.result, false)
+    XCTAssertEqual(strTest1.rest, "")
+    
+    
+    // Sentences
+    
+    let compositeSentence = thnkr.evaluate("`milk` == `milk` && 2 >= 1 || false != true")
+    XCTAssertEqual(compositeSentence.result, true)
+    XCTAssertEqual(compositeSentence.rest, "")
+      
+    let compositeSentance1 = thnkr.evaluate("1.23 != 1.231 && `bacon` != `milk` && true != false && 2 > 1")
+    XCTAssertEqual(compositeSentance1.result, true)
+    XCTAssertEqual(compositeSentance1.rest, "")
   }
   
   func test_logicTest() {
-    let ins = ThinkerEvaluater()
+    let thnkr = ThinkerEvaluater()
     
-    let test2 = ins.evaluateLogic("true || false")
+    let test2 = thnkr.evaluateLogic("true || false")
     XCTAssertEqual(test2.result, true)
     XCTAssertEqual(test2.rest, "")
     
-    let test3 = ins.evaluateLogic("true || true")
+    let test3 = thnkr.evaluateLogic("true || true")
     XCTAssertEqual(test3.result, true)
     XCTAssertEqual(test3.rest, "")
     
-    let test4 = ins.evaluateLogic("false || true")
+    let test4 = thnkr.evaluateLogic("false || true")
     XCTAssertEqual(test4.result, true)
     XCTAssertEqual(test4.rest, "")
     
-    let test5 = ins.evaluateLogic("false && false")
+    let test5 = thnkr.evaluateLogic("false && false")
     XCTAssertEqual(test5.result, false)
     XCTAssertEqual(test5.rest, "")
     
-    let test6 = ins.evaluateLogic("true && true")
-    XCTAssertEqual(test6.result, true)
+    let test6 = thnkr.evaluateLogic("true && false")
+    XCTAssertEqual(test6.result, false)
     XCTAssertEqual(test6.rest, "")
   }
   
   func test_ExpressionMiddleware() {
-    let instance = ExpressionMiddleware()
+    let thnkr = ExpressionMiddleware()
     
     let string =
       """
@@ -78,7 +108,7 @@ class thinkerTests: XCTestCase {
       "doubleValue": 3233.23123124
     ]
     
-    let result = instance.replaceByKeyPath(
+    let result = thnkr.replaceByKeyPath(
       string: string,
       config: ("model.", json)
     )
@@ -92,8 +122,6 @@ class thinkerTests: XCTestCase {
       `stringValue` == `stringValue`
       <null> == <null>
       """
-    
-    print(result)
     
     XCTAssertEqual(result, testString)
   }
