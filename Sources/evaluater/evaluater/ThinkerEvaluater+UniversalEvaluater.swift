@@ -35,10 +35,23 @@ extension ThinkerEvaluater {
   
   public func evaluateParenthesis(_ input: String) -> Result {
     var preInput = input
-    let regexp = "((?:[\\d.]|true|false)*)\\s(==|>|>=|<=|<|!=)\\s(?:[\\d.]|true|false)*"
     
-    let matches = input.regexMatchResult(pattern: regexp)
-    for value in matches {
+    // Поиск выражений сравнения для переменных: Bool, Int, Double
+    
+    let comparisonRegexp = "((?:[\\d.]|true|false)*)\\s(==|>|>=|<=|<|!=)\\s(?:[\\d.]|true|false)*"
+    for value in input.regexMatchResult(pattern: comparisonRegexp) {
+      let evalResult = evaluate(value.match)
+      
+      if evalResult.rest.isEmpty {
+        let resultStr = String(describing: evalResult.result ?? false)
+        preInput = preInput.replacingOccurrences(of: value.match, with: resultStr)
+      }
+    }
+    
+    // Поиск выражений сравнения для строк заключенных в символ '
+    
+    let strComparison = "(`.+?`)\\s(==|!=)\\s(`.+?`)"
+    for value in input.regexMatchResult(pattern: strComparison) {
       let evalResult = evaluate(value.match)
       
       if evalResult.rest.isEmpty {
@@ -62,12 +75,7 @@ extension ThinkerEvaluater {
       }
       
       for subExpression in result {
-//        let expRes = subExpression
-//          .regexMatch(pattern: "( == | >= | <= | != | > | < )").isEmpty
-//          ? evaluateLogic(subExpression)
-//          : evaluate(subExpression)
-        
-        let expRes = evaluate(subExpression)
+        let expRes = evaluateLogic(subExpression)
         guard let resultBool = expRes.result else {
           return (nil, expRes.rest)
         }
@@ -78,27 +86,23 @@ extension ThinkerEvaluater {
     }
     
     print("final exp: ", expression)
-    return evaluate(expression)
+    return evaluateLogic(expression)
   }
   
   public func evaluateLogic(_ input: String) -> Result {
     // Parser for "<whitespace><comparison><whitespace>" && "
     let logicParser = zip(whitespaceParser, logicOperatr, whitespaceParser)
-      .flatMap { Parser.always($0.1) }
-    
-    // Parser for "<any value><whitespace><comparison><whitespace><any value>" = "3 >= 2"
-    let expressionCondition = zip(.bool, logicParser, .bool)
-      .map { lhs, condition, rhs -> Bool in
-        return compareLogicBool(l: lhs, r: rhs, op: condition)
+      .flatMap { val -> Parser<LogicType> in
+        return Parser.always(val.1)
       }
-  
-    let compositeExpression = zip(expressionCondition, whitespaceParser, logicOperatr)
-      .map { result, whitespace, logic -> InteratorType in
-        switch whitespace {
-        case .empty:
+      
+    let compositeExpression = zip(.bool, logicParser)
+      .map { result, logic -> InteratorType in
+        switch logic {
+        case .empty, .finish:
           return .endOfExpression(result: result)
           
-        case .whitespace:
+        default:
           return .haveNext(result: result, logicOp: logic)
         }
       }
