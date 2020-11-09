@@ -36,7 +36,7 @@ public class ExpressionMiddleware {
     let expression = string
     
     let regexp = "\\(([^()]|())*\\)"
-    let paths = expression.regex(pattern: regexp)
+    let paths = expression.regexMatch(pattern: regexp)
 
     return paths.map { $0.removeBraces() }
   }
