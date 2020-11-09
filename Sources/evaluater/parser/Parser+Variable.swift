@@ -91,6 +91,10 @@ public extension Parser where Output == Int {
 
 public extension Parser where Output == Bool {
   static let bool = Self { input in
+    if input.isEmpty {
+      return nil
+    }
+    
     let original = input
     
     if input.prefix(4).contains("true") {

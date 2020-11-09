@@ -1,6 +1,8 @@
 import Foundation
 
 extension String {
+  public typealias RegexpResult = (match: String, range: NSRange)
+  
   public func cleareNewline() -> String {
     return replacingOccurrences(of: "\\n", with: " ", options: .regularExpression)
   }
@@ -12,23 +14,27 @@ extension String {
     return newValue
   }
   
-  public func regex(pattern: String) -> [String] {
+  public func regexMatch(pattern: String) -> [String] {
+    return regexMatchResult(pattern: pattern).map { $0.match }
+  }
+  
+  public func regexMatchResult(pattern: String) -> [RegexpResult] {
     do {
       let regex = try NSRegularExpression(pattern: pattern, options: NSRegularExpression.Options.allowCommentsAndWhitespace)
       let nsstr = self as NSString
       let all = NSRange(location: 0, length: nsstr.length)
-      var matches: [String] = [String]()
+      var matches: [RegexpResult] = [RegexpResult]()
       regex
         .enumerateMatches(in: self, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: all) { (result: NSTextCheckingResult?, _, _) in
           if let r = result {
             let result = nsstr.substring(with: r.range) as String
-            matches.append(result)
+            matches.append((result, r.range))
           }
         }
       return matches
     } catch let e {
       print(e)
-      return [String]()
+      return [RegexpResult]()
     }
   }
   

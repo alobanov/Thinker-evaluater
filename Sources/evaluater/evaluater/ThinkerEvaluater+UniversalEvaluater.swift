@@ -33,6 +33,26 @@ extension ThinkerEvaluater {
     return evaluate(updatedExpression)
   }
   
+  public func evaluateParenthesis(_ input: String) -> Result {
+    var preInput = input
+    let regexp = "((?:[\\d.]|true|false)*)\\s(==|>|>=|<=|<|!=)\\s(?:[\\d.]|true|false)*"
+    
+    let matches = input.regexMatchResult(pattern: regexp)
+    for value in matches {
+      let evalResult = evaluate(value.match)
+      
+      if evalResult.rest.isEmpty {
+        let resultStr = String(describing: evalResult.result ?? false)
+        preInput = preInput.replacingOccurrences(of: value.match, with: resultStr)
+      }
+    }
+    
+    print(preInput)
+    
+    let result = evaluateWithBraces(preInput)
+    return result
+  }
+  
   public func evaluateWithBraces(_ input: String) -> Result {
     var expression = input
     while true {
@@ -42,11 +62,12 @@ extension ThinkerEvaluater {
       }
       
       for subExpression in result {
-        let expRes = subExpression
-          .regex(pattern: "( == | >= | <= | != | > | < )").isEmpty
-          ? evaluateLogic(subExpression)
-          : evaluate(subExpression)
+//        let expRes = subExpression
+//          .regexMatch(pattern: "( == | >= | <= | != | > | < )").isEmpty
+//          ? evaluateLogic(subExpression)
+//          : evaluate(subExpression)
         
+        let expRes = evaluate(subExpression)
         guard let resultBool = expRes.result else {
           return (nil, expRes.rest)
         }
@@ -56,7 +77,8 @@ extension ThinkerEvaluater {
       }
     }
     
-    return evaluateLogic(expression)
+    print("final exp: ", expression)
+    return evaluate(expression)
   }
   
   public func evaluateLogic(_ input: String) -> Result {
@@ -70,8 +92,8 @@ extension ThinkerEvaluater {
         return compareLogicBool(l: lhs, r: rhs, op: condition)
       }
   
-    let compositeExpression = zip(expressionCondition, whitespaceParser, logicOperatr, whitespaceParser)
-      .map { result, whitespace, logic, _ -> InteratorType in
+    let compositeExpression = zip(expressionCondition, whitespaceParser, logicOperatr)
+      .map { result, whitespace, logic -> InteratorType in
         switch whitespace {
         case .empty:
           return .endOfExpression(result: result)
@@ -89,6 +111,7 @@ extension ThinkerEvaluater {
           case .and:
             let newResult = current.result && result
             return (newResult, .finish)
+            
           case .or:
             let newResult = current.result || result
             return (newResult, .finish)
