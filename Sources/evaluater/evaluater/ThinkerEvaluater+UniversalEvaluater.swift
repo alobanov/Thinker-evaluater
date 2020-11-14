@@ -9,23 +9,14 @@
 import Foundation
 
 // Universal evaluater
-//
-// - Work with types:
-//  1. Numeric constants, as floating point (12345.678)
-//  2. String constants (single quotes: `foobar`)
-//  3. Boolean constants: true false
-// - Comparison operators: ==, >=, <=, !=, >, <
-// - Logic operators: &&, ||
-//
-// Example usage:
-//  XCTAssertEqual(instance.evaluate("2 == 2") ?? false, true) // Int
-//  XCTAssertEqual(instance.evaluate("-122.321 == -122.321") ?? false, true) // Doube
-//  XCTAssertEqual(instance.evaluate("false != true") ?? false, true) // Boolean
-//  XCTAssertEqual(instance.evaluate("`asd` != `ads`") ?? false, true) // String
-//  XCTAssertEqual(instance.evaluate("`milk` == `milk` && 2 >= 1 || true == true") ?? false, true) // Composite expression
 
 extension ThinkerEvaluater {
   
+  /// Evaluate expression
+  /// - Parameters:
+  ///   - input: String - `(false != true) && ((34 > 2.1231123) && 4.2 == 4.2 || 3 != 3)`
+  ///   - keypathConfig: KeyPathConfig = (prefix: String, json: [String: Any])
+  /// - Returns: (result: Bool?, rest: Substring)
   public static func eval(_ input: String, keypathConfig: ExpressionMiddleware.KeyPathConfig? = nil) -> Result {
     let thnkr = ThinkerEvaluater()
     
