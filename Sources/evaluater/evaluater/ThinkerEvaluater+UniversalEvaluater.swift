@@ -26,19 +26,24 @@ import Foundation
 
 extension ThinkerEvaluater {
   
-  // example: (2 == 2 || (34 <= 5 && `edwdwe` == `dwedw`)) && ((32 == 32 && false) || 44 == 44)
-  
-  public func evaluate(_ input: String, keypathConfig: ExpressionMiddleware.KeyPathConfig) -> Result {
-    let updatedExpression = ExpressionMiddleware().replaceByKeyPath(string: input, config: keypathConfig)
-    return evaluate(updatedExpression)
+  public static func eval(_ input: String, keypathConfig: ExpressionMiddleware.KeyPathConfig? = nil) -> Result {
+    let thnkr = ThinkerEvaluater()
+    
+    if let config = keypathConfig {
+      // Проверяем keypath значения
+      let updateInput = ExpressionMiddleware().replaceByKeyPath(string: input, config: config)
+      return thnkr.evaluateInParenthesis(updateInput)
+    } else {
+      return thnkr.evaluateInParenthesis(input)
+    }
   }
   
-  public func evaluateParenthesis(_ input: String) -> Result {
+  public func evaluateInParenthesis(_ input: String) -> Result {
     var preInput = input
     
     // Поиск выражений сравнения для переменных: Bool, Int, Double
     
-    let comparisonRegexp = "((?:[\\d.]|true|false)*)\\s(==|>|>=|<=|<|!=)\\s(?:[\\d.]|true|false)*"
+    let comparisonRegexp = "((?:[-\\d.]|true|false)*)\\s(==|>|>=|<=|<|!=)\\s(?:[-\\d.]|true|false)*"
     for value in input.regexMatchResult(pattern: comparisonRegexp) {
       let evalResult = evaluate(value.match)
       
@@ -60,13 +65,10 @@ extension ThinkerEvaluater {
       }
     }
     
-    print(preInput)
-    
-    let result = evaluateWithBraces(preInput)
-    return result
+    return evaluateParenthesisWithControlOrder(preInput)
   }
   
-  public func evaluateWithBraces(_ input: String) -> Result {
+  public func evaluateParenthesisWithControlOrder(_ input: String) -> Result {
     var expression = input
     while true {
       let result = ExpressionMiddleware().bracesEvaluater(string: expression)
@@ -81,11 +83,9 @@ extension ThinkerEvaluater {
         }
         
         expression = expression.replacingOccurrences(of: "(\(subExpression))", with: String(describing: resultBool))
-        print(expression)
       }
     }
     
-    print("final exp: ", expression)
     return evaluateLogic(expression)
   }
   
