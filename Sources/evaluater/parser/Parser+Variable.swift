@@ -12,6 +12,9 @@ public extension Parser where Output == VariableType {
   static let universalValue = Self { input in
     let original = input
     
+    // TODO: Не будут работать строки в которых есть пробелы
+    // Необходимо сделать парсер для всей строки которя находтся между двумя `
+    // Это должно решить проблему полного подвисания при парсинге строк
     if input.first == "`" {
       guard let f = input.components(separatedBy: " ").first else {
         input = original

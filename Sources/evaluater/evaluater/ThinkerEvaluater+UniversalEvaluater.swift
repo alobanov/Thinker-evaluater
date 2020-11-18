@@ -83,21 +83,22 @@ extension ThinkerEvaluater {
   }
   
   public func evaluateLogic(_ input: String) -> Result {
-    let compositeExpression = zip(.bool, logicParser)
-      .map { result, logic -> InteratorType in
+    let compositeExpression = Parser.bool.take(logicParser)
+//      zip(.bool, logicParser)
+      .map { result, logic -> ExpressionInteratorType in
         switch logic {
         case .empty, .finish:
-          return .endOfExpression(result: result)
+          return .end(result: result)
           
         default:
-          return .haveNext(result: result, logicOp: logic)
+          return .next(result: result, logicOp: logic)
         }
       }
     
     let parser = compositeExpression.zeroOrMore().map {
       $0.reduce(LogicValue(false, .start)) { current, value in
         switch value {
-        case let .endOfExpression(result):
+        case let .end(result):
           switch current.logicOp {
           case .and:
             let newResult = current.result && result
@@ -114,7 +115,7 @@ extension ThinkerEvaluater {
             return (result, current.logicOp)
           }
           
-        case let .haveNext(result, logicOp):
+        case let .next(result, logicOp):
           if current.logicOp == .start {
             return (result, logicOp)
             
@@ -138,7 +139,8 @@ extension ThinkerEvaluater {
   
   public func evaluate(_ input: String) -> Result {
     // Parser for "<any value><whitespace><comparison><whitespace><any value>" = "3 >= 2"
-    let expressionCondition = zip(.universalValue, comparisonSentenceParser, .universalValue)
+    let expressionCondition = Parser.universalValue.take(comparisonSentenceParser).take(.universalValue)
+//      zip(.universalValue, comparisonSentenceParser, .universalValue)
       .map { lhs, condition, rhs -> Bool in
         switch lhs {
         case let .bool(value):
@@ -154,20 +156,21 @@ extension ThinkerEvaluater {
         
     // Parser exmaple = "3 >= 2 && "
     // It just detected more sentence or catch end of sentence
-    let compositeExpression = zip(expressionCondition, logicParser)
-      .map { result, logicOperator -> InteratorType in
+    let compositeExpression = expressionCondition.take(logicParser)
+//      zip(expressionCondition, logicParser)
+      .map { result, logicOperator -> ExpressionInteratorType in
         switch logicOperator {
         case .empty, .finish:
           #if DEBUG
           print("endOfExpression:", result)
           #endif
-          return .endOfExpression(result: result)
+          return .end(result: result)
           
         default:
           #if DEBUG
           print("haveNext:", result, logicOperator)
           #endif
-          return .haveNext(result: result, logicOp: logicOperator)
+          return .next(result: result, logicOp: logicOperator)
         }
       }
     
@@ -234,10 +237,10 @@ extension ThinkerEvaluater {
       .map {
         $0.reduce(LogicValue(false, .start)) { current, value in
           switch value {
-          case let .endOfExpression(result):
+          case let .end(result):
             return endOfExpressionComparison(current, result)
             
-          case let .haveNext(result, logicOperator):
+          case let .next(result, logicOperator):
             return haveNextComparison(current, result, logicOperator)
           }
         }

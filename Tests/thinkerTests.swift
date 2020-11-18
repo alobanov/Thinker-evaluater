@@ -53,7 +53,7 @@ class thinkerTests: XCTestCase {
     
     // Sentences
     
-    let compositeSentence = ThinkerEvaluater.eval("`milk` == `milk` && 2 >= 1 || false != true")
+    let compositeSentence = ThinkerEvaluater.eval("`milk is white` == `milk is white` && 2 >= 1 || false != true")
     XCTAssertEqual(compositeSentence.result, true)
     XCTAssertEqual(compositeSentence.rest, "")
       

@@ -40,12 +40,24 @@ public struct ThinkerEvaluater {
   // MARK: - Composite parsers
   
   // Parser for "<whitespace><comparison><whitespace>" && "
-  public let logicParser = zip(whitespaceParser, logicOperatr, whitespaceParser)
-    .flatMap { val -> Parser<LogicType> in
-      return Parser.always(val.1)
-    }
+  public let logicParser = Parser
+    .skip(whitespaceParser)
+    .take(logicOperatr)
+    .skip(whitespaceParser)
+    
+//    Old zip style
+//    zip(whitespaceParser, logicOperatr, whitespaceParser)
+//    .flatMap { val -> Parser<LogicType> in
+//      return Parser.always(val.1)
+//    }
   
   // Parser for "<whitespace><comparison><whitespace>" = " >= "
-  public let comparisonSentenceParser = zip(Self.whitespaceParser, Self.comparisonOperator, Self.whitespaceParser)
-    .flatMap { Parser.always($0.1) }
+  public let comparisonSentenceParser = Parser
+    .skip(Self.whitespaceParser)
+    .take(Self.comparisonOperator)
+    .skip(Self.whitespaceParser)
+
+//    Old zip style
+//    zip(Self.whitespaceParser, Self.comparisonOperator, Self.whitespaceParser)
+//    .flatMap { Parser.always($0.1) }
 }

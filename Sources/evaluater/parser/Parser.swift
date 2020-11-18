@@ -122,6 +122,40 @@ public extension Parser where Output == Substring {
   }
 }
 
+// MARK: - Fluently Zipping Parsers
+
+extension Parser {
+  public func skip<B>(_ p: Parser<B>) -> Self {
+    zip(self, p).map { a, _ in a }
+  }
+}
+
+extension Parser {
+  public func take<NewOutput>(_ p: Parser<NewOutput>) -> Parser<(Output, NewOutput)> {
+    zip(self, p)
+  }
+}
+
+extension Parser {
+  public func take<A, B, C>(_ p: Parser<C>) -> Parser<(A, B, C)> where Output == (A, B) {
+    zip(self, p).map { ab, c in (ab.0, ab.1, c) }
+  }
+}
+
+extension Parser {
+  public static func skip(_ p: Self) -> Parser<Void> {
+    p.map { _ in () }
+  }
+}
+
+extension Parser where Output == Void {
+  func take<A>(_ p: Parser<A>) -> Parser <A> {
+    zip(self, p).map { _, a in a }
+  }
+}
+
+// MARK: - ZIP
+
 public func zip<Output1, Output2>(
   _ p1: Parser<Output1>,
   _ p2: Parser<Output2>
