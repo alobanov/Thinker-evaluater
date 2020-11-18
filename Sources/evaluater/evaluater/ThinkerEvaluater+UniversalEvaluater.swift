@@ -29,7 +29,7 @@ extension ThinkerEvaluater {
     }
   }
   
-  public func evaluateInParenthesis(_ input: String) -> Result {
+  private func evaluateInParenthesis(_ input: String) -> Result {
     var preInput = input
     
     // Поиск выражений сравнения для переменных: Bool, Int, Double
@@ -62,18 +62,20 @@ extension ThinkerEvaluater {
   public func evaluateParenthesisWithControlOrder(_ input: String) -> Result {
     var expression = input
     while true {
-      let result = ExpressionMiddleware().bracesEvaluater(string: expression)
-      if result.isEmpty {
+      let bracesResult = ExpressionMiddleware().bracesEvaluater(string: expression)
+      if bracesResult.isEmpty {
         break
       }
       
-      for subExpression in result {
-        let expRes = evaluateLogic(subExpression)
-        guard let resultBool = expRes.result else {
-          return (nil, expRes.rest)
+      for subExpression in bracesResult {
+        let logicResult = evaluateLogic(subExpression)
+        guard let resultBool = logicResult.result else {
+          return (nil, logicResult.rest)
         }
         
-        expression = expression.replacingOccurrences(of: "(\(subExpression))", with: String(describing: resultBool))
+        expression = expression.replacingOccurrences(
+          of: "(\(subExpression))", with: String(describing: resultBool)
+        )
       }
     }
     
@@ -81,12 +83,6 @@ extension ThinkerEvaluater {
   }
   
   public func evaluateLogic(_ input: String) -> Result {
-    // Parser for "<whitespace><comparison><whitespace>" && "
-    let logicParser = zip(whitespaceParser, logicOperatr, whitespaceParser)
-      .flatMap { val -> Parser<LogicType> in
-        return Parser.always(val.1)
-      }
-      
     let compositeExpression = zip(.bool, logicParser)
       .map { result, logic -> InteratorType in
         switch logic {
@@ -141,10 +137,6 @@ extension ThinkerEvaluater {
   }
   
   public func evaluate(_ input: String) -> Result {
-    // Parser for "<whitespace><comparison><whitespace>" = " >= "
-    let comparisonSentenceParser = zip(whitespaceParser, comparisonOperator, whitespaceParser)
-      .flatMap { Parser.always($0.1) }
-    
     // Parser for "<any value><whitespace><comparison><whitespace><any value>" = "3 >= 2"
     let expressionCondition = zip(.universalValue, comparisonSentenceParser, .universalValue)
       .map { lhs, condition, rhs -> Bool in
@@ -159,13 +151,7 @@ extension ThinkerEvaluater {
           return compareString(l: value, r: rhs.strValue, op: condition)
         }
       }
-    
-    // Parser for "<whitespace><logic><whitespace>" = " && "
-    let logicParser = zip(whitespaceParser, logicOperatr, whitespaceParser)
-      .flatMap { val -> Parser<LogicType> in
-        return Parser.always(val.1)
-      }
-    
+        
     // Parser exmaple = "3 >= 2 && "
     // It just detected more sentence or catch end of sentence
     let compositeExpression = zip(expressionCondition, logicParser)

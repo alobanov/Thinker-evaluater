@@ -58,11 +58,13 @@ public enum LogicType: String {
 }
 
 public enum EmptyCharType {
-  case whitespace, empty
+  case whitespace
+  case empty
 }
 
 public enum InteratorType {
-  case endOfExpression(result: Bool), haveNext(result: Bool, logicOp: LogicType)
+  case endOfExpression(result: Bool)
+  case haveNext(result: Bool, logicOp: LogicType)
 }
 
 typealias LogicValue = (result: Bool, logicOp: LogicType)

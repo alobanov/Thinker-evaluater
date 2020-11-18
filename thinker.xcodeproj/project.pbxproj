@@ -47,10 +47,10 @@
 		E86F35942545D21600D35553 /* Parser+Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35922545D21600D35553 /* Parser+Variable.swift */; };
 		E86F35952545D21600D35553 /* Parser+Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35922545D21600D35553 /* Parser+Variable.swift */; };
 		E86F35962545D21600D35553 /* Parser+Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35922545D21600D35553 /* Parser+Variable.swift */; };
-		E86F35C125474DC200D35553 /* Thinker+CompareVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35C025474DC200D35553 /* Thinker+CompareVariable.swift */; };
-		E86F35C225474DC200D35553 /* Thinker+CompareVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35C025474DC200D35553 /* Thinker+CompareVariable.swift */; };
-		E86F35C325474DC200D35553 /* Thinker+CompareVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35C025474DC200D35553 /* Thinker+CompareVariable.swift */; };
-		E86F35C425474DC200D35553 /* Thinker+CompareVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35C025474DC200D35553 /* Thinker+CompareVariable.swift */; };
+		E86F35C125474DC200D35553 /* Thinker+Comparators.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35C025474DC200D35553 /* Thinker+Comparators.swift */; };
+		E86F35C225474DC200D35553 /* Thinker+Comparators.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35C025474DC200D35553 /* Thinker+Comparators.swift */; };
+		E86F35C325474DC200D35553 /* Thinker+Comparators.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35C025474DC200D35553 /* Thinker+Comparators.swift */; };
+		E86F35C425474DC200D35553 /* Thinker+Comparators.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35C025474DC200D35553 /* Thinker+Comparators.swift */; };
 		E86F35D425483AEE00D35553 /* ThinkerEvaluater+UniversalEvaluater.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35D325483AEE00D35553 /* ThinkerEvaluater+UniversalEvaluater.swift */; };
 		E86F35D525483AEE00D35553 /* ThinkerEvaluater+UniversalEvaluater.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35D325483AEE00D35553 /* ThinkerEvaluater+UniversalEvaluater.swift */; };
 		E86F35D625483AEE00D35553 /* ThinkerEvaluater+UniversalEvaluater.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35D325483AEE00D35553 /* ThinkerEvaluater+UniversalEvaluater.swift */; };
@@ -59,10 +59,10 @@
 		E86F35E825483B6100D35553 /* ParserTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35E625483B6100D35553 /* ParserTypes.swift */; };
 		E86F35E925483B6100D35553 /* ParserTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35E625483B6100D35553 /* ParserTypes.swift */; };
 		E86F35EA25483B6100D35553 /* ParserTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F35E625483B6100D35553 /* ParserTypes.swift */; };
-		E86F36082548494800D35553 /* ThinkerEvaluater+IntEvaluater.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F36072548494800D35553 /* ThinkerEvaluater+IntEvaluater.swift */; };
-		E86F36092548494800D35553 /* ThinkerEvaluater+IntEvaluater.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F36072548494800D35553 /* ThinkerEvaluater+IntEvaluater.swift */; };
-		E86F360A2548494800D35553 /* ThinkerEvaluater+IntEvaluater.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F36072548494800D35553 /* ThinkerEvaluater+IntEvaluater.swift */; };
-		E86F360B2548494800D35553 /* ThinkerEvaluater+IntEvaluater.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F36072548494800D35553 /* ThinkerEvaluater+IntEvaluater.swift */; };
+		E86F36082548494800D35553 /* DEPR_ThinkerEvaluater+IntEvaluater.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F36072548494800D35553 /* DEPR_ThinkerEvaluater+IntEvaluater.swift */; };
+		E86F36092548494800D35553 /* DEPR_ThinkerEvaluater+IntEvaluater.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F36072548494800D35553 /* DEPR_ThinkerEvaluater+IntEvaluater.swift */; };
+		E86F360A2548494800D35553 /* DEPR_ThinkerEvaluater+IntEvaluater.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F36072548494800D35553 /* DEPR_ThinkerEvaluater+IntEvaluater.swift */; };
+		E86F360B2548494800D35553 /* DEPR_ThinkerEvaluater+IntEvaluater.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86F36072548494800D35553 /* DEPR_ThinkerEvaluater+IntEvaluater.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,10 +143,10 @@
 		E86F356C2545D00100D35553 /* ThinkerEvaluater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThinkerEvaluater.swift; sourceTree = "<group>"; };
 		E86F35862545D02300D35553 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		E86F35922545D21600D35553 /* Parser+Variable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Parser+Variable.swift"; sourceTree = "<group>"; };
-		E86F35C025474DC200D35553 /* Thinker+CompareVariable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Thinker+CompareVariable.swift"; sourceTree = "<group>"; };
+		E86F35C025474DC200D35553 /* Thinker+Comparators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Thinker+Comparators.swift"; sourceTree = "<group>"; };
 		E86F35D325483AEE00D35553 /* ThinkerEvaluater+UniversalEvaluater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThinkerEvaluater+UniversalEvaluater.swift"; sourceTree = "<group>"; };
 		E86F35E625483B6100D35553 /* ParserTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserTypes.swift; sourceTree = "<group>"; };
-		E86F36072548494800D35553 /* ThinkerEvaluater+IntEvaluater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThinkerEvaluater+IntEvaluater.swift"; sourceTree = "<group>"; };
+		E86F36072548494800D35553 /* DEPR_ThinkerEvaluater+IntEvaluater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DEPR_ThinkerEvaluater+IntEvaluater.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -327,9 +327,9 @@
 		E86F361325484A6300D35553 /* evaluater */ = {
 			isa = PBXGroup;
 			children = (
-				E86F35C025474DC200D35553 /* Thinker+CompareVariable.swift */,
+				E86F35C025474DC200D35553 /* Thinker+Comparators.swift */,
 				E86F35D325483AEE00D35553 /* ThinkerEvaluater+UniversalEvaluater.swift */,
-				E86F36072548494800D35553 /* ThinkerEvaluater+IntEvaluater.swift */,
+				E86F36072548494800D35553 /* DEPR_ThinkerEvaluater+IntEvaluater.swift */,
 				E86F356C2545D00100D35553 /* ThinkerEvaluater.swift */,
 			);
 			path = evaluater;
@@ -727,11 +727,11 @@
 				3D9C42A222745900000A6585 /* thinker.swift in Sources */,
 				E854BE8E254ADC9D007EFC72 /* ExpressionMiddleware.swift in Sources */,
 				E86F356D2545D00100D35553 /* ThinkerEvaluater.swift in Sources */,
-				E86F36082548494800D35553 /* ThinkerEvaluater+IntEvaluater.swift in Sources */,
+				E86F36082548494800D35553 /* DEPR_ThinkerEvaluater+IntEvaluater.swift in Sources */,
 				E86F35E725483B6100D35553 /* ParserTypes.swift in Sources */,
 				E86F35932545D21600D35553 /* Parser+Variable.swift in Sources */,
 				E86F35872545D02300D35553 /* Parser.swift in Sources */,
-				E86F35C125474DC200D35553 /* Thinker+CompareVariable.swift in Sources */,
+				E86F35C125474DC200D35553 /* Thinker+Comparators.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -745,11 +745,11 @@
 				3D9C42B1227459C1000A6585 /* thinker.swift in Sources */,
 				E854BE8F254ADC9D007EFC72 /* ExpressionMiddleware.swift in Sources */,
 				E86F356E2545D00100D35553 /* ThinkerEvaluater.swift in Sources */,
-				E86F36092548494800D35553 /* ThinkerEvaluater+IntEvaluater.swift in Sources */,
+				E86F36092548494800D35553 /* DEPR_ThinkerEvaluater+IntEvaluater.swift in Sources */,
 				E86F35E825483B6100D35553 /* ParserTypes.swift in Sources */,
 				E86F35942545D21600D35553 /* Parser+Variable.swift in Sources */,
 				E86F35882545D02300D35553 /* Parser.swift in Sources */,
-				E86F35C225474DC200D35553 /* Thinker+CompareVariable.swift in Sources */,
+				E86F35C225474DC200D35553 /* Thinker+Comparators.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -763,11 +763,11 @@
 				3D9C42BF227459F6000A6585 /* thinker.swift in Sources */,
 				E854BE90254ADC9D007EFC72 /* ExpressionMiddleware.swift in Sources */,
 				E86F356F2545D00100D35553 /* ThinkerEvaluater.swift in Sources */,
-				E86F360A2548494800D35553 /* ThinkerEvaluater+IntEvaluater.swift in Sources */,
+				E86F360A2548494800D35553 /* DEPR_ThinkerEvaluater+IntEvaluater.swift in Sources */,
 				E86F35E925483B6100D35553 /* ParserTypes.swift in Sources */,
 				E86F35952545D21600D35553 /* Parser+Variable.swift in Sources */,
 				E86F35892545D02300D35553 /* Parser.swift in Sources */,
-				E86F35C325474DC200D35553 /* Thinker+CompareVariable.swift in Sources */,
+				E86F35C325474DC200D35553 /* Thinker+Comparators.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -781,11 +781,11 @@
 				3D9C42CD22745A28000A6585 /* thinker.swift in Sources */,
 				E854BE91254ADC9D007EFC72 /* ExpressionMiddleware.swift in Sources */,
 				E86F35702545D00100D35553 /* ThinkerEvaluater.swift in Sources */,
-				E86F360B2548494800D35553 /* ThinkerEvaluater+IntEvaluater.swift in Sources */,
+				E86F360B2548494800D35553 /* DEPR_ThinkerEvaluater+IntEvaluater.swift in Sources */,
 				E86F35EA25483B6100D35553 /* ParserTypes.swift in Sources */,
 				E86F35962545D21600D35553 /* Parser+Variable.swift in Sources */,
 				E86F358A2545D02300D35553 /* Parser.swift in Sources */,
-				E86F35C425474DC200D35553 /* Thinker+CompareVariable.swift in Sources */,
+				E86F35C425474DC200D35553 /* Thinker+Comparators.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

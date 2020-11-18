@@ -9,19 +9,19 @@
 import Foundation
 
 extension ThinkerEvaluater {
-  public func test_evaluateInt(_ input: String) -> String? {
+  private func test_evaluateInt(_ input: String) -> String? {
     let conditionParser = zip(
-      whitespaceParser,
-      comparisonOperator,
-      whitespaceParser
+      Self.whitespaceParser,
+      Self.comparisonOperator,
+      Self.whitespaceParser
     ).flatMap { val -> Parser<ComparisonType> in
       return Parser.always(val.1)
     }
     
     let logicParser = zip(
-      whitespaceParser,
-      logicOperatr,
-      whitespaceParser
+      Self.whitespaceParser,
+      Self.logicOperatr,
+      Self.whitespaceParser
     ).flatMap { val -> Parser<LogicType> in
       return Parser.always(val.1)
     }

@@ -14,7 +14,7 @@ public struct ThinkerEvaluater {
   // MARK: - Primitive parsers
   
   // Comparison operator parser (11 == 34)
-  public let comparisonOperator = Parser.oneOf(
+  public static let comparisonOperator = Parser.oneOf(
     Parser.prefix("==").map { ComparisonType.equal },
     Parser.prefix(">=").map { .greaterOrEqual },
     Parser.prefix("<=").map { .lessOrEqual },
@@ -24,14 +24,28 @@ public struct ThinkerEvaluater {
   )
 
   // Logic operator parser (true && false || false)
-  public let logicOperatr = Parser.oneOf(
+  public static let logicOperatr = Parser.oneOf(
     Parser.prefix("&&").map { LogicType.and },
     Parser.prefix("||").map { .or },
+    Parser.prefix("OR").map { .or },
+    Parser.prefix("AND").map { .and },
     Parser.prefix("").map { .empty }
   )
   
-  public let whitespaceParser = Parser.oneOf(
+  public static let whitespaceParser = Parser.oneOf(
     Parser.prefix(" ").map { EmptyCharType.whitespace },
     Parser.prefix("").map { .empty }
   )
+  
+  // MARK: - Composite parsers
+  
+  // Parser for "<whitespace><comparison><whitespace>" && "
+  public let logicParser = zip(whitespaceParser, logicOperatr, whitespaceParser)
+    .flatMap { val -> Parser<LogicType> in
+      return Parser.always(val.1)
+    }
+  
+  // Parser for "<whitespace><comparison><whitespace>" = " >= "
+  public let comparisonSentenceParser = zip(Self.whitespaceParser, Self.comparisonOperator, Self.whitespaceParser)
+    .flatMap { Parser.always($0.1) }
 }
