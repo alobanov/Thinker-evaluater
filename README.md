@@ -75,6 +75,11 @@ if !result.rest.isEmpty {
 
 XCTAssertEqual(result.result, true)
 
+// Parenthesis to control order of evaluation
+
+let expression = "(34 == 34 || false == true) && ((43 >= 23) || (`asd` == `not` || 11 == 11))"
+let result = ThinkerEvaluater.eval(expression)
+XCTAssertEqual(result.result, true)
 ```
 
 ## Installation
