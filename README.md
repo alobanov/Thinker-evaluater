@@ -34,7 +34,7 @@ For example we have string like `44 >= 43 || 22 == 12`, you need to evaluate thi
    - [x] String constants (single quotes: \`foobar\`)
    - [x] Boolean constants: `true` `false`
 - [x] Comparison operators: `==`, `>=`, `<=`, `!=`, `>`, `<`
-- [x] Logic operators: `&&`, `||`
+- [x] Logic operators: `&&`, `||`, `OR`, `AND`
 - [x] Map value from json, for example `prefix.node.nestedValue`, `var.` will be replaced value from dictionary by key `prefix.node.nestedValue`
 - [x] Parenthesis to control order of evaluation `(` `)`
 
@@ -49,14 +49,12 @@ The example application is the best way to see `thinker` in action. Simply open 
 
 ## Usage
 
-```swift
-let instance = ThinkerEvaluater()
-    
-XCTAssertEqual(instance.evaluate("2 == 2"), true) // Int
-XCTAssertEqual(instance.evaluate("-122.321 == -122.321"), true) // Doube
-XCTAssertEqual(instance.evaluate("false != true"), true) // Boolean
-XCTAssertEqual(instance.evaluate("`asd` != `ads`"), true) // String
-XCTAssertEqual(instance.evaluate("`milk` == `milk` && 2 >= 1 || true == true"), true) // Composite expression
+```swift    
+XCTAssertEqual(ThinkerEvaluater.eval("2 == 2"), true) // Int
+XCTAssertEqual(ThinkerEvaluater.eval("-122.321 == -122.321"), true) // Doube
+XCTAssertEqual(ThinkerEvaluater.eval("false != true"), true) // Boolean
+XCTAssertEqual(ThinkerEvaluater.eval("`asd` != `ads`"), true) // String
+XCTAssertEqual(ThinkerEvaluater.eval("`milk` == `milk` && 2 >= 1 || true == true"), true) // Composite expression
 
 // Usafe with JSON values
 
@@ -69,7 +67,7 @@ let json: [String: Any] = [
    "doubleValue": 3233.23123124
  ]
 
-let result = ThinkerEvaluater().evaluate(string, keypathConfig: ("model.", json))
+let result = ThinkerEvaluater.eval(string, keypathConfig: ("model.", json))
 
 if !result.rest.isEmpty {
   XCTFail(String(result.rest))
