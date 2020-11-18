@@ -6,12 +6,12 @@
    <a href="https://developer.apple.com/swift/">
       <img src="https://img.shields.io/badge/Swift-5.0-orange.svg?style=flat" alt="Swift 5.0">
    </a>
-   <a href="http://cocoapods.org/pods/thinker">
+<!--    <a href="http://cocoapods.org/pods/thinker">
       <img src="https://img.shields.io/cocoapods/v/thinker.svg?style=flat" alt="Version">
-   </a>
-   <a href="http://cocoapods.org/pods/thinker">
+   </a> -->
+<!--    <a href="http://cocoapods.org/pods/thinker">
       <img src="https://img.shields.io/cocoapods/p/thinker.svg?style=flat" alt="Platform">
-   </a>
+   </a> -->
    <a href="https://github.com/Carthage/Carthage">
       <img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage Compatible">
    </a>
