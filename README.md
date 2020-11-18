@@ -25,7 +25,7 @@
 <b>ℹ️ Parser for evaluating logic expressions.</b>
 </p>
 
-For example we have string like `44 >= 43 || 22 == 12`, you need to evaluate this expression and take  a boolean result. So give that line for `thinker` and BOOM you have a result. Example: `let result = ThinkerEvaluater().evaluate(srt)`
+For example we have string like `44 >= 43 || 22 == 12`, you need to evaluate this expression and take  a boolean result. So give that line for `thinker` and BOOM you have a result. Example: `let result = ThinkerEvaluater.eval(srt)`
 
 ## Features
 
