@@ -12,7 +12,7 @@ extension ThinkerEvaluater {
   private func test_evaluateInt(_ input: String) -> String? {
     let conditionParser = zip(
       Self.whitespaceParser,
-      Self.comparisonOperator,
+      Self.comparisonOperatorParser,
       Self.whitespaceParser
     ).flatMap { val -> Parser<ComparisonType> in
       return Parser.always(val.1)
@@ -20,7 +20,7 @@ extension ThinkerEvaluater {
 
     let logicParser = zip(
       Self.whitespaceParser,
-      Self.logicOperatr,
+      Self.logicOperatorParser,
       Self.whitespaceParser
     ).flatMap { val -> Parser<LogicType> in
       return Parser.always(val.1)
