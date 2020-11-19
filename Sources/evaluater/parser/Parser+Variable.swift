@@ -12,17 +12,18 @@ public extension Parser where Output == VariableType {
   static let universalValue = Self { input in
     let original = input
     
-    // TODO: Не будут работать строки в которых есть пробелы
-    // Необходимо сделать парсер для всей строки которя находтся между двумя `
-    // Это должно решить проблему полного подвисания при парсинге строк
     if input.first == "`" {
-      guard let f = input.components(separatedBy: " ").first else {
-        input = original
-        return nil
-      }
+      var count = 0
+      let prefix = input.prefix(while: { char in
+        if count == 2 {
+          return false
+        }
+        if char == "`" { count+=1 }
+        return true
+      })
       
-      let result = f.replacingOccurrences(of: "`", with: "", options: String.CompareOptions.literal, range: nil)
-      input.removeFirst(f.count)
+      let result = prefix.replacingOccurrences(of: "`", with: "", options: String.CompareOptions.literal, range: nil)
+      input.removeFirst(prefix.count)
       return .str(result)
     }
     

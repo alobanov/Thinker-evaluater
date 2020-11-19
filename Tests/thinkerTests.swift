@@ -43,13 +43,22 @@ class thinkerTests: XCTestCase {
     XCTAssertEqual(boolTest1.result, true)
     XCTAssertEqual(boolTest1.rest, "")
 
-    let strTest = ThinkerEvaluater.eval("`milk` == `bacon`")
+    let strTest = ThinkerEvaluater.eval("`milk string` == `bacon string`")
     XCTAssertEqual(strTest.result, false)
     XCTAssertEqual(strTest.rest, "")
     
     let strTest1 = ThinkerEvaluater.eval("`milk` == `2.123`")
     XCTAssertEqual(strTest1.result, false)
     XCTAssertEqual(strTest1.rest, "")
+    
+    let strTest3 = ThinkerEvaluater.eval("`milk string    ` == `milk string    `")
+    XCTAssertEqual(strTest3.result, true)
+    XCTAssertEqual(strTest3.rest, "")
+    
+    // TODO: Найти решения для сравнения разных типов данных
+//    let strTest4 = ThinkerEvaluater.eval("`milk` == 23")
+//    XCTAssertEqual(strTest4.result, false)
+//    XCTAssertEqual(strTest4.rest, "")
     
     // Sentences
     
@@ -186,7 +195,7 @@ class thinkerTests: XCTestCase {
   func test_ExpressionMiddleware_with_braces() {
     // (true || false) && ((true) || (false || true))
     if (34 == 34 || false == true) && ((43 >= 23) || ("asd" == "not" || 11 == 11)) {
-      let expression = "(34 == 34 || false == true) && ((43 >= 23) || (`asd` == `not` || 11 == 11))"
+      let expression = "(34 == 34 || false == true) && ((43 >= 23) || (`asd !@#$%^&*()` == `not L:\"<>?` || 11 == 11))"
       let result = ThinkerEvaluater.eval(expression)
       
       if !result.rest.isEmpty {

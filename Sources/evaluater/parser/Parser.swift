@@ -184,24 +184,24 @@ public func zip<Output1, Output2, Output3>(
     .map { output1, output23 in (output1, output23.0, output23.1) }
 }
 
-//let locationName = Parser.prefix(while: { $0 != "," })
-public func zip<A, B, C, D>(
-  _ a: Parser<A>,
-  _ b: Parser<B>,
-  _ c: Parser<C>,
-  _ d: Parser<D>
-) -> Parser<(A, B, C, D)> {
-  zip(a, zip(b, c, d))
-    .map { a, bcd in (a, bcd.0, bcd.1, bcd.2) }
-}
-
-public func zip<A, B, C, D, E>(
-  _ a: Parser<A>,
-  _ b: Parser<B>,
-  _ c: Parser<C>,
-  _ d: Parser<D>,
-  _ e: Parser<E>
-) -> Parser<(A, B, C, D, E)> {
-  zip(a, zip(b, c, d, e))
-    .map { a, bcde in (a, bcde.0, bcde.1, bcde.2, bcde.3) }
-}
+// let locationName = Parser.prefix(while: { $0 != "," })
+//public func zip<A, B, C, D>(
+//  _ a: Parser<A>,
+//  _ b: Parser<B>,
+//  _ c: Parser<C>,
+//  _ d: Parser<D>
+//) -> Parser<(A, B, C, D)> {
+//  zip(a, zip(b, c, d))
+//    .map { a, bcd in (a, bcd.0, bcd.1, bcd.2) }
+//}
+//
+//public func zip<A, B, C, D, E>(
+//  _ a: Parser<A>,
+//  _ b: Parser<B>,
+//  _ c: Parser<C>,
+//  _ d: Parser<D>,
+//  _ e: Parser<E>
+//) -> Parser<(A, B, C, D, E)> {
+//  zip(a, zip(b, c, d, e))
+//    .map { a, bcde in (a, bcde.0, bcde.1, bcde.2, bcde.3) }
+//}

@@ -17,7 +17,7 @@ extension ThinkerEvaluater {
     ).flatMap { val -> Parser<ComparisonType> in
       return Parser.always(val.1)
     }
-    
+
     let logicParser = zip(
       Self.whitespaceParser,
       Self.logicOperatr,
