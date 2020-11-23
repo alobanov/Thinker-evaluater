@@ -17,8 +17,6 @@ public class ExpressionMiddleware {
     // Keys
     let paths = expression.regex(pattern: "\(config.prefix)([a-zA-Z0-9_.\\-]+)", group: 1)
     
-    print(paths)
-    
     // replace key by values
     for path in paths {
       if let value = config.json.value(by: path) as? String {

@@ -33,29 +33,18 @@ extension ThinkerEvaluater {
     var preInput = input
     
     // Поиск выражений сравнения для переменных: Bool, Int, Double
-    
-    let comparisonRegexp = "((?:[-\\d.]|true|false)*)\\s(==|>|>=|<=|<|!=)\\s(?:[-\\d.]|true|false)*"
+    let comparisonRegexp = "((?:[-\\d.]|true|false|`.+`)*)(?:\\s+)(==|>|>=|<=|<|!=)(?:\\s+)((?:[-\\d.]|true|false|`.+`)*)"
     for value in input.regexMatchResult(pattern: comparisonRegexp) {
       let evalResult = evaluate(value.match)
       
       if evalResult.rest.isEmpty {
         let resultStr = String(describing: evalResult.result ?? false)
         preInput = preInput.replacingOccurrences(of: value.match, with: resultStr)
+      } else {
+        return evalResult
       }
     }
-    
-    // Поиск выражений сравнения для строк заключенных в символ '
-    
-    let strComparison = "(`.+?`)\\s(==|!=)\\s(`.+?`)"
-    for value in input.regexMatchResult(pattern: strComparison) {
-      let evalResult = evaluate(value.match)
-      
-      if evalResult.rest.isEmpty {
-        let resultStr = String(describing: evalResult.result ?? false)
-        preInput = preInput.replacingOccurrences(of: value.match, with: resultStr)
-      }
-    }
-    
+        
     return evaluateParenthesisWithControlOrder(preInput)
   }
   

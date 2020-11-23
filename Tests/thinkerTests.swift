@@ -16,6 +16,17 @@ class thinkerTests: XCTestCase {
     ("testExample", testTrivialComparison),
   ]
   
+  func test_ComplicatedTest() {
+    let expression = "(34   == 34 || false == true)"
+    let result = ThinkerEvaluater.eval(expression)
+    
+    if !result.rest.isEmpty {
+      XCTAssertEqual("34   == 34", String(result.rest))
+    }
+    
+    XCTAssertEqual(result.result, false)
+  }
+  
   func testTrivialComparison() {
 //    let boolTes = ThinkerEvaluater.eval("false != true")
 //    XCTAssertEqual(boolTes.result, true)
