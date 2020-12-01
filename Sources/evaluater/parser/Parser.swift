@@ -175,14 +175,14 @@ public func zip<Output1, Output2>(
   }
 }
 
-public func zip<Output1, Output2, Output3>(
-  _ p1: Parser<Output1>,
-  _ p2: Parser<Output2>,
-  _ p3: Parser<Output3>
-) -> Parser<(Output1, Output2, Output3)> {
-  zip(p1, zip(p2, p3))
-    .map { output1, output23 in (output1, output23.0, output23.1) }
-}
+//public func zip<Output1, Output2, Output3>(
+//  _ p1: Parser<Output1>,
+//  _ p2: Parser<Output2>,
+//  _ p3: Parser<Output3>
+//) -> Parser<(Output1, Output2, Output3)> {
+//  zip(p1, zip(p2, p3))
+//    .map { output1, output23 in (output1, output23.0, output23.1) }
+//}
 
 // let locationName = Parser.prefix(while: { $0 != "," })
 //public func zip<A, B, C, D>(

@@ -32,7 +32,7 @@ extension ThinkerEvaluater {
   private func evaluateInParenthesis(_ input: String) -> Result {
     var preInput = input
     
-    // Поиск выражений сравнения для переменных: Bool, Int, Double
+    // Поиск выражений сравнения для переменных: Bool, Int, Double, String
     let comparisonRegexp = "((?:[-\\d.]|true|false|`.+`)*)(?:\\s+)(==|>|>=|<=|<|!=)(?:\\s+)((?:[-\\d.]|true|false|`.+`)*)"
     for value in input.regexMatchResult(pattern: comparisonRegexp) {
       let evalResult = evaluate(value.match)
@@ -89,14 +89,10 @@ extension ThinkerEvaluater {
         switch value {
         case let .end(result):
           switch current.logicOp {
-          case .and:
-            let newResult = current.result && result
-            return (newResult, .finish)
-            
-          case .or:
-            let newResult = current.result || result
-            return (newResult, .finish)
-            
+          case .and, .or:
+            let logicResult = compareLogicBool(l: current.result, r: result, op: current.logicOp)
+            return (logicResult, .finish)
+              
           case .empty, .finish:
             return (current.result, current.logicOp)
             
@@ -111,8 +107,8 @@ extension ThinkerEvaluater {
           } else {
             switch current.logicOp {
             case .and, .or:
-              let newResult = compareLogicBool(l: current.result, r: result, op: current.logicOp)
-              return (newResult, logicOp)
+              let logicResult = compareLogicBool(l: current.result, r: result, op: current.logicOp)
+              return (logicResult, logicOp)
               
             case .empty, .start, .finish:
               return (current.result, current.logicOp)
@@ -168,20 +164,13 @@ extension ThinkerEvaluater {
     // 2. Next value: <bool>
     let endOfExpressionComparison: (LogicValue, Bool) -> (LogicValue) = { current, result in
       switch current.logicOp {
-      case .and:
-        let newResult = current.result && result
+      case .and, .or:
+        let logicResult = compareLogicBool(l: current.result, r: result, op: current.logicOp)
         #if DEBUG
-        print("Final composite logic:", current.result, "AND", result, "->", newResult)
+        print("Final composite logic:", current.result, current.logicOp, result, "->", logicResult)
         #endif
-        return (newResult, .finish)
-        
-      case .or:
-        let newResult = current.result || result
-        #if DEBUG
-        print("Final composite logic:", current.result, "OR", result, "->", newResult)
-        #endif
-        return (newResult, .finish)
-        
+        return (logicResult, .finish)
+                
       case .empty, .finish:
         return (current.result, current.logicOp)
         
