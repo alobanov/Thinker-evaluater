@@ -45,7 +45,7 @@ For example we have string like `44 >= 43 || 22 == 12`, you need to evaluate thi
 
 ## Example
 
-The example application is the best way to see `thinker` in action. Simply open the `thinker.xcodeproj` and run the `Example` scheme.
+Tests is the best way to see `thinker` in action. Simply open the `thinker.xcodeproj` and run the `thinker-iOSTests` scheme.
 
 ## Usage
 
