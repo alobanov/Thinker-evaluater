@@ -142,6 +142,7 @@
 		E86F35C025474DC200D35553 /* Thinker+Comparators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Thinker+Comparators.swift"; sourceTree = "<group>"; };
 		E86F35D325483AEE00D35553 /* ThinkerEvaluater+UniversalEvaluater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ThinkerEvaluater+UniversalEvaluater.swift"; sourceTree = "<group>"; };
 		E86F35E625483B6100D35553 /* ParserTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserTypes.swift; sourceTree = "<group>"; };
+		E89A51FC259338BF0067CA6F /* Experiment.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Experiment.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,6 +255,7 @@
 		3D9C42A0227458FA000A6585 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				E89A51FB259338770067CA6F /* experiment */,
 				E86F356B2545CFE900D35553 /* evaluater */,
 				3D9C42A122745900000A6585 /* thinker.swift */,
 			);
@@ -327,6 +329,14 @@
 				E86F356C2545D00100D35553 /* ThinkerEvaluater.swift */,
 			);
 			path = evaluater;
+			sourceTree = "<group>";
+		};
+		E89A51FB259338770067CA6F /* experiment */ = {
+			isa = PBXGroup;
+			children = (
+				E89A51FC259338BF0067CA6F /* Experiment.playground */,
+			);
+			path = experiment;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
