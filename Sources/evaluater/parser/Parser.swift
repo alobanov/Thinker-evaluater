@@ -236,3 +236,18 @@ public func zip<Input, Output1, Output2>(
 //  zip(a, zip(b, c, d, e))
 //    .map { a, bcde in (a, bcde.0, bcde.1, bcde.2, bcde.3) }
 //}
+
+public extension Parser where Input == [String: String] {
+  static func key(_ key: String, _ parser: Parser<Substring, Output>) -> Self {
+    Self { dict in
+      guard var value = dict[key]?[...]
+      else { return nil }
+      
+      guard let output = parser.run(&value)
+      else { return nil }
+      
+      dict[key] = value.isEmpty ? nil : String(value)
+      return output
+    }
+  }
+}
