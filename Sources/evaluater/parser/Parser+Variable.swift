@@ -157,16 +157,3 @@ public extension Parser where Input == Substring, Output == Character {
     return input.removeFirst()
   }
 }
-
-//public extension Parser where Input == Substring, Output == Void {
-//  static func prefix(_ p: String) -> Self {
-//    Self { input in
-//      guard input.hasPrefix(p) else {
-//        return nil
-//      }
-//      
-//      input.removeFirst(p.count)
-//      return ()
-//    }
-//  }
-//}
