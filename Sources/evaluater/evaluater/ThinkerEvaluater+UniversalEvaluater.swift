@@ -118,7 +118,7 @@ extension ThinkerEvaluater {
       }
     }
     
-    let res = parser.run(input)
+    let res = parser.run(input[...])
     return (res.match?.0, res.rest)
   }
   
@@ -224,7 +224,7 @@ extension ThinkerEvaluater {
         }
       }
     
-    let res = parser.run(input)
+    let res = parser.run(input[...])
     return (res.match?.0, res.rest)
   }
 }
