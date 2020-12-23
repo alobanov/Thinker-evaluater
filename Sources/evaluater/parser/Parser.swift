@@ -4,38 +4,38 @@ import Foundation
 // (String) -> (match: A?, rest: String)
 // (inout String) -> A?
 // (inout Substring) -> A?
-public struct Parser<Output> {
-  public let run: (inout Substring) -> Output?
+public struct Parser<Input, Output> {
+  public let run: (inout Input) -> Output?
 }
 
-extension Parser: ExpressibleByUnicodeScalarLiteral where Output == Void {
+extension Parser: ExpressibleByUnicodeScalarLiteral where Input == Substring, Output == Void {
   public typealias UnicodeScalarLiteralType = StringLiteralType
 }
 
-extension Parser: ExpressibleByExtendedGraphemeClusterLiteral where Output == Void {
+extension Parser: ExpressibleByExtendedGraphemeClusterLiteral where Input == Substring, Output == Void {
   public typealias ExtendedGraphemeClusterLiteralType = StringLiteralType
 }
 
-extension Parser: ExpressibleByStringLiteral where Output == Void {
+extension Parser: ExpressibleByStringLiteral where Input == Substring, Output == Void {
   public typealias StringLiteralType = String
   
   public init(stringLiteral value: String) {
-    self = .prefix(value)
+    self = .prefix(value[...])
   }
 }
 
 public extension Parser {
-  typealias EvaluateResult = (match: Output?, rest: Substring)
+  typealias EvaluateResult = (match: Output?, rest: Input)
   
-  func run(_ input: String) -> EvaluateResult {
-    var input = input[...]
+  func run(_ input: Input) -> EvaluateResult {
+    var input = input
     let match = self.run(&input)
     return (match, input)
   }
 }
 
 public extension Parser {
-  func map<NewOutput>(_ f: @escaping (Output) -> NewOutput) -> Parser<NewOutput> {
+  func map<NewOutput>(_ f: @escaping (Output) -> NewOutput) -> Parser<Input, NewOutput> {
     .init { input in
       self.run(&input).map(f)
     }
@@ -44,8 +44,8 @@ public extension Parser {
 
 public extension Parser {
   func flatMap<NewOutput>(
-    _ f: @escaping (Output) -> Parser<NewOutput>
-  ) -> Parser<NewOutput> {
+    _ f: @escaping (Output) -> Parser<Input, NewOutput>
+  ) -> Parser<Input, NewOutput> {
     .init { input in
       let original = input
       let output = self.run(&input)
@@ -88,9 +88,9 @@ public extension Parser {
 
 public extension Parser {
   func zeroOrMore(
-    separatedBy separator: Parser<Void> = ""
-  ) -> Parser<[Output]> {
-    Parser<[Output]> { input in
+    separatedBy separator: Parser<Input, Void> = .always(())
+  ) -> Parser<Input, [Output]> {
+    Parser<Input, [Output]> { input in
       var rest = input
       var matches: [Output] = []
       
@@ -102,9 +102,9 @@ public extension Parser {
           return matches
         }
         
-        if input.isEmpty {
-          return matches
-        }
+//        if input {
+//          return matches
+//        }
       }
       input = rest
       return matches
@@ -112,7 +112,23 @@ public extension Parser {
   }
 }
 
-public extension Parser where Output == Substring {
+public extension Parser
+where Input: Collection,
+      Output == Void,
+      Input.Element: Equatable,
+      Input.SubSequence == Input
+{
+  static func prefix(_ p: Input.SubSequence) -> Self {
+    Self { input in
+      guard input.starts(with: p)
+      else { return nil }
+      input.removeFirst(p.count)
+      return ()
+    }
+  }
+}
+
+public extension Parser where Input == Substring, Output == Substring {
   static func prefix(while p: @escaping (Character) -> Bool) -> Self {
     Self { input in
       let output = input.prefix(while: p)
@@ -120,47 +136,62 @@ public extension Parser where Output == Substring {
       return output
     }
   }
+  
+  static func prefix(upTo substring: Substring) -> Self {
+    Self { input in
+      guard let endIndex = input.range(of: substring)?.lowerBound
+      else { return nil }
+      
+      let match = input[..<endIndex]
+      input = input[endIndex...]
+      return match
+    }
+  }
+  
+  static func prefix(through substring: Substring) -> Self {
+    Self { input in
+      guard let endIndex = input.range(of: substring)?.upperBound
+      else { return nil }
+      
+      let match = input[..<endIndex]
+      input = input[endIndex...]
+      return match
+    }
+  }
 }
 
 // MARK: - Fluently Zipping Parsers
 
 extension Parser {
-  public func skip<B>(_ p: Parser<B>) -> Self {
-    zip(self, p).map { a, _ in a }
-  }
-}
-
-extension Parser {
-  public func take<NewOutput>(_ p: Parser<NewOutput>) -> Parser<(Output, NewOutput)> {
+  public func take<NewOutput>(_ p: Parser<Input, NewOutput>) -> Parser<Input, (Output, NewOutput)> {
     zip(self, p)
   }
-}
-
-extension Parser {
-  public func take<A, B, C>(_ p: Parser<C>) -> Parser<(A, B, C)> where Output == (A, B) {
+  
+  public func take<A, B, C>(_ p: Parser<Input, C>) -> Parser<Input, (A, B, C)> where Output == (A, B) {
     zip(self, p).map { ab, c in (ab.0, ab.1, c) }
   }
-}
-
-extension Parser {
-  public static func skip(_ p: Self) -> Parser<Void> {
+    
+  public func skip<B>(_ p: Parser<Input, B>) -> Self {
+    zip(self, p).map { a, _ in a }
+  }
+  
+  public static func skip(_ p: Self) -> Parser<Input, Void> {
     p.map { _ in () }
   }
 }
 
 extension Parser where Output == Void {
-  func take<A>(_ p: Parser<A>) -> Parser <A> {
+  func take<A>(_ p: Parser<Input, A>) -> Parser <Input, A> {
     zip(self, p).map { _, a in a }
   }
 }
 
 // MARK: - ZIP
 
-public func zip<Output1, Output2>(
-  _ p1: Parser<Output1>,
-  _ p2: Parser<Output2>
-) -> Parser<(Output1, Output2)> {
-  
+public func zip<Input, Output1, Output2>(
+  _ p1: Parser<Input, Output1>,
+  _ p2: Parser<Input, Output2>
+) -> Parser<Input, (Output1, Output2)> {
   .init { input -> (Output1, Output2)? in
     let original = input
     guard let output1 = p1.run(&input) else {
@@ -205,3 +236,18 @@ public func zip<Output1, Output2>(
 //  zip(a, zip(b, c, d, e))
 //    .map { a, bcde in (a, bcde.0, bcde.1, bcde.2, bcde.3) }
 //}
+
+public extension Parser where Input == [String: String] {
+  static func key(_ key: String, _ parser: Parser<Substring, Output>) -> Self {
+    Self { dict in
+      guard var value = dict[key]?[...]
+      else { return nil }
+      
+      guard let output = parser.run(&value)
+      else { return nil }
+      
+      dict[key] = value.isEmpty ? nil : String(value)
+      return output
+    }
+  }
+}

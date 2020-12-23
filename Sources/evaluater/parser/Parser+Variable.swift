@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension Parser where Output == VariableType {
+public extension Parser where Input == Substring, Output == VariableType {
   static let universalValue = Self { input in
     let original = input
     
@@ -67,7 +67,7 @@ public extension Parser where Output == VariableType {
 
 // Parser<Int>.int
 // .int
-public extension Parser where Output == Int {
+public extension Parser where Input == Substring, Output == Int {
   static let int = Self { input in
     let original = input
     
@@ -93,7 +93,7 @@ public extension Parser where Output == Int {
   }
 }
 
-public extension Parser where Output == Bool {
+public extension Parser where Input == Substring, Output == Bool {
   static let bool = Self { input in
     if input.isEmpty {
       return nil
@@ -116,7 +116,7 @@ public extension Parser where Output == Bool {
   }
 }
 
-public extension Parser where Output == Double {
+public extension Parser where Input == Substring, Output == Double {
   static let double = Self { input in
     let original = input
     let sign: Double
@@ -148,25 +148,12 @@ public extension Parser where Output == Double {
   }
 }
 
-public extension Parser where Output == Character {
+public extension Parser where Input == Substring, Output == Character {
   static let char = Self { input in
     guard !input.isEmpty else {
       return nil
     }
     
     return input.removeFirst()
-  }
-}
-
-public extension Parser where Output == Void {
-  static func prefix(_ p: String) -> Self {
-    Self { input in
-      guard input.hasPrefix(p) else {
-        return nil
-      }
-      
-      input.removeFirst(p.count)
-      return ()
-    }
   }
 }
