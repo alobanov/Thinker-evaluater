@@ -62,19 +62,19 @@ extension String {
     }
   }
   
-  private func findStringBy(searchString: String, results: [NSTextCheckingResult]) -> String {
-    if !results.isEmpty {
-      let firstMatch = results[0]
-      
-      if firstMatch.numberOfRanges >= 1 {
-        let range = firstMatch.range(at: 1)
-        let newRange = searchString.index(searchString.startIndex, offsetBy: range.location) ..< searchString.index(searchString.startIndex, offsetBy: range.location + range.length)
-        let string = String(searchString[newRange])
-        return string
-      }
-      
-      return ""
-    }
-    return ""
-  }
+//  private func findStringBy(searchString: String, results: [NSTextCheckingResult]) -> String {
+//    if !results.isEmpty {
+//      let firstMatch = results[0]
+//
+//      if firstMatch.numberOfRanges >= 1 {
+//        let range = firstMatch.range(at: 1)
+//        let newRange = searchString.index(searchString.startIndex, offsetBy: range.location) ..< searchString.index(searchString.startIndex, offsetBy: range.location + range.length)
+//        let string = String(searchString[newRange])
+//        return string
+//      }
+//
+//      return ""
+//    }
+//    return ""
+//  }
 }

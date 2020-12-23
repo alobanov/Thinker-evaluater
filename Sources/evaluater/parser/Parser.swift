@@ -20,7 +20,7 @@ extension Parser: ExpressibleByStringLiteral where Input == Substring, Output ==
   public typealias StringLiteralType = String
   
   public init(stringLiteral value: String) {
-    self = .prefix(value)
+    self = .prefix(value[...])
   }
 }
 
@@ -112,10 +112,15 @@ public extension Parser {
   }
 }
 
-public extension Parser where Input == Substring, Output == Void {
-  static func prefix(_ p: String) -> Self {
+public extension Parser
+where Input: Collection,
+      Output == Void,
+      Input.Element: Equatable,
+      Input.SubSequence == Input
+{
+  static func prefix(_ p: Input.SubSequence) -> Self {
     Self { input in
-      guard input.hasPrefix(p)
+      guard input.starts(with: p)
       else { return nil }
       input.removeFirst(p.count)
       return ()
