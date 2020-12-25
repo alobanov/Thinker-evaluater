@@ -22,6 +22,15 @@ public struct ThinkerEvaluater {
     Parser.prefix("<").map { .lessThan },
     Parser.prefix("!=").map { .notEqual }
   )
+  
+  public static let comparisonOperatorParserUTF8 = Parser<Substring.UTF8View, ComparisonType>.oneOf(
+    Parser.prefix("=="[...].utf8).map { ComparisonType.equal },
+    Parser.prefix(">="[...].utf8).map { .greaterOrEqual },
+    Parser.prefix("<="[...].utf8).map { .lessOrEqual },
+    Parser.prefix(">"[...].utf8).map { .greaterThan },
+    Parser.prefix("<"[...].utf8).map { .lessThan },
+    Parser.prefix("!="[...].utf8).map { .notEqual }
+  )
 
   // Logic operator parser (true && false || false)
   public static let logicOperatorParser = Parser<Substring, LogicType>.oneOf(
@@ -32,18 +41,31 @@ public struct ThinkerEvaluater {
     Parser.prefix("").map { .empty }
   )
   
+  public static let logicOperatorParserUTF8 = Parser<Substring.UTF8View, LogicType>.oneOf(
+    Parser.prefix("&&"[...].utf8).map { LogicType.and },
+    Parser.prefix("||"[...].utf8).map { .or },
+    Parser.prefix("OR"[...].utf8).map { .or },
+    Parser.prefix("AND"[...].utf8).map { .and },
+    Parser.prefix(""[...].utf8).map { .empty }
+  )
+  
   public static let whitespaceParser = Parser<Substring, EmptyCharType>.oneOf(
     Parser.prefix(" ").map { EmptyCharType.whitespace },
     Parser.prefix("").map { .empty }
+  )
+  
+  public static let whitespaceParserUTF8 = Parser<Substring.UTF8View, EmptyCharType>.oneOf(
+    Parser.prefix(" "[...].utf8).map { EmptyCharType.whitespace },
+    Parser.prefix(""[...].utf8).map { .empty }
   )
   
   // MARK: - Composite parsers
   
   // Parser for "<whitespace><comparison><whitespace>" && "
   public let logicParser = Parser
-    .skip(whitespaceParser)
-    .take(logicOperatorParser)
-    .skip(whitespaceParser)
+    .skip(whitespaceParserUTF8)
+    .take(logicOperatorParserUTF8)
+    .skip(whitespaceParserUTF8)
     
 //    Old zip style
 //    zip(whitespaceParser, logicOperatr, whitespaceParser)
@@ -53,9 +75,9 @@ public struct ThinkerEvaluater {
   
   // Parser for "<whitespace><comparison><whitespace>" = " >= "
   public let comparisonSentenceParser = Parser
-    .skip(Self.whitespaceParser)
-    .take(Self.comparisonOperatorParser)
-    .skip(Self.whitespaceParser)
+    .skip(Self.whitespaceParserUTF8)
+    .take(Self.comparisonOperatorParserUTF8)
+    .skip(Self.whitespaceParserUTF8)
 
 //    Old zip style
 //    zip(Self.whitespaceParser, Self.comparisonOperator, Self.whitespaceParser)

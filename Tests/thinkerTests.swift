@@ -27,6 +27,12 @@ class thinkerTests: XCTestCase {
     XCTAssertEqual(result.result, false)
   }
   
+  func testE() {
+    let strTest4 = ThinkerEvaluater.eval("`false` == `true` || `qwe` == `qwe`")
+    XCTAssertEqual(strTest4.result, true)
+    XCTAssertEqual(strTest4.rest, "")
+  }
+  
   func testTrivialComparison() {
 //    let boolTes = ThinkerEvaluater.eval("false != true")
 //    XCTAssertEqual(boolTes.result, true)
@@ -65,6 +71,10 @@ class thinkerTests: XCTestCase {
     let strTest3 = ThinkerEvaluater.eval("`milk string    ` == `milk string    `")
     XCTAssertEqual(strTest3.result, true)
     XCTAssertEqual(strTest3.rest, "")
+    
+    let strTest4 = ThinkerEvaluater.eval("`false` != `true` && `qwe` == `qwe`")
+    XCTAssertEqual(strTest4.result, true)
+    XCTAssertEqual(strTest4.rest, "")
     
     // TODO: Найти решения для сравнения разных типов данных
 //    let strTest4 = ThinkerEvaluater.eval("`milk` == 23")
@@ -233,5 +243,13 @@ class thinkerTests: XCTestCase {
     )
     
     XCTAssertEqual(result3.result, true)
+  }
+  
+  func testParserPerformance() {
+    let expr2 = "(23 >= 2 && false != true) && (43.21 != 23 && (34.1231 > 332 && true == false)) || 4 > 3 && `qwe` == `qwe` && (23 >= 2 && false != true) && (43.21 != 23 && (34.1231 > 332 && true == false)) || 4 > 3 && `qwe` == `qwe` || (23 >= 2 && false != true) && (43.21 != 23 && (34.1231 > 332 && true == false)) || 4 > 3 && `qwe` == `qwe` && (23 >= 2 && false != true) && (43.21 != 23 && (34.1231 > 332 && true == false)) || 4 > 3 && `qwe` == `qwe`"
+    
+    measure {
+      _ = ThinkerEvaluater.eval(expr2)
+    }
   }
 }

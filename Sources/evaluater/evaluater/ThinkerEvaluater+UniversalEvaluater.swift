@@ -118,8 +118,8 @@ extension ThinkerEvaluater {
       }
     }
     
-    let res = parser.run(input[...])
-    return (res.match?.0, res.rest)
+    let res = parser.run(input[...].utf8)
+    return (res.match?.0, Substring(res.rest))
   }
   
   public func evaluate(_ input: String) -> Result {
@@ -129,12 +129,21 @@ extension ThinkerEvaluater {
       .map { lhs, condition, rhs -> Bool in
         switch lhs {
         case let .bool(value):
+          #if DEBUG
+          print("Bool comparison:", value, condition, rhs.boolValue ?? false)
+          #endif
           return compareBool(l: value, r: rhs.boolValue, op: condition)
           
         case let .double(value):
+          #if DEBUG
+          print("Double comparison:", value, condition, rhs.doubleValue ?? 0.0)
+          #endif
           return compareDouble(l: value, r: rhs.doubleValue, op: condition)
           
         case let .str(value):
+          #if DEBUG
+          print("Str comparison:", value, condition, rhs.strValue ?? "")
+          #endif
           return compareString(l: value, r: rhs.strValue, op: condition)
         }
       }
@@ -224,7 +233,7 @@ extension ThinkerEvaluater {
         }
       }
     
-    let res = parser.run(input[...])
-    return (res.match?.0, res.rest)
+    let res = parser.run(input[...].utf8)
+    return (res.match?.0, Substring(res.rest))
   }
 }
